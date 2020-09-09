@@ -137,9 +137,10 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
     var initialNum: Double = initial.toDouble()
     var percentDouble: Double = percent.toDouble()
     for (i in 1..3) {
-        if (percentDouble > initialNum) {
+        if (percentDouble == 1.0) {
+            initialNum += initialNum / 100
+        } else if (percentDouble > initialNum) {
             initialNum += ((initialNum / percentDouble) * 100)
-
         } else if (percentDouble > 0) {
             initialNum += (initialNum / percentDouble)
         } else {
