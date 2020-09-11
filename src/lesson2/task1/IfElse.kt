@@ -72,7 +72,7 @@ fun ageDescription(age: Int): String {
     if (age > 0 && age < 200) {
         if ((age % 10) == 0 || age > 4 && age < 20 || age > 104 && age < 120) return "$age лет"
         if ((age % 10) == 1) return "$age год"
-        if ((age % 10) > 5) return "$age лет"
+        if ((age % 10) > 4) return "$age лет"
         if ((age % 10) > 1) return "$age года"
     }
     return null.toString()
