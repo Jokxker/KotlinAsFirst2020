@@ -152,7 +152,7 @@ fun rookOrBishopThreatens(
     bishopX: Int, bishopY: Int
 ): Int {
     if ((rookX == kingX || rookY == kingY) &&
-        ((bishopX == kingX - 1 && bishopY == kingX - 1) || (bishopX == kingX - 2 && bishopX == kingX - 2) ||
+        ((bishopX == kingX - 1 && bishopY == kingY - 1) || (bishopX == kingX - 2 && bishopX == kingY - 2) ||
                 (bishopX == kingX - 3 && bishopY == kingY - 3) || (bishopX == kingX - 4 && bishopY == kingY - 4) ||
                 (bishopX == kingX - 5 && bishopY == kingY - 5) || (bishopX == kingX - 6 && bishopY == kingY - 6) ||
                 (bishopX == kingX - 7 && bishopY == kingY - 7) || (bishopX == kingX - 8 && bishopY == kingY - 8) ||
@@ -173,7 +173,7 @@ fun rookOrBishopThreatens(
     if (rookX == kingX || rookY == kingY) {
         return 1
     }
-    if ((bishopX == kingX - 1 && bishopY == kingX - 1) || (bishopX == kingX - 2 && bishopX == kingX - 2) ||
+    if ((bishopX == kingX - 1 && bishopY == kingY - 1) || (bishopX == kingX - 2 && bishopY == kingY - 2) ||
         (bishopX == kingX - 3 && bishopY == kingY - 3) || (bishopX == kingX - 4 && bishopY == kingY - 4) ||
         (bishopX == kingX - 5 && bishopY == kingY - 5) || (bishopX == kingX - 6 && bishopY == kingY - 6) ||
         (bishopX == kingX - 7 && bishopY == kingY - 7) || (bishopX == kingX - 8 && bishopY == kingY - 8) ||
@@ -238,8 +238,8 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     if (a <= d) {
         if (b == c || a == d) return 0
         if (a < c && b > d) return d - c
-        if (a > c && b < d) return b - a
-        if (a > c && b > d) return d - a
+        if (a > c && b <= d) return b - a
+        if (a > c && b >= d) return d - a
         if (c < b && d > b) return b - c
         if (a == c && b == d) return b - a
         if (a == c && b < d) return b - a
