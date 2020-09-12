@@ -150,7 +150,49 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int {
+    if ((rookX == kingX || rookY == kingY) &&
+        ((bishopX == kingX - 1 && bishopY == kingX - 1) || (bishopX == kingX - 2 && bishopX == kingX - 2) ||
+                (bishopX == kingX - 3 && bishopY == kingY - 3) || (bishopX == kingX - 4 && bishopY == kingY - 4) ||
+                (bishopX == kingX - 5 && bishopY == kingY - 5) || (bishopX == kingX - 6 && bishopY == kingY - 6) ||
+                (bishopX == kingX - 7 && bishopY == kingY - 7) || (bishopX == kingX - 8 && bishopY == kingY - 8) ||
+                (bishopX == kingX - 1 && bishopY == kingY + 1) || (bishopX == kingX - 2 && bishopY == kingY + 2) ||
+                (bishopX == kingX - 3 && bishopY == kingY + 3) || (bishopX == kingX - 4 && bishopY == kingY + 4) ||
+                (bishopX == kingX - 5 && bishopY == kingY + 5) || (bishopX == kingX - 6 && bishopY == kingY + 6) ||
+                (bishopX == kingX - 7 && bishopY == kingY + 7) || (bishopX == kingX - 8 && bishopY == kingY + 8) ||
+                (bishopX == kingX + 1 && bishopY == kingY - 1) || (bishopX == kingX + 2 && bishopY == kingY - 2) ||
+                (bishopX == kingX + 3 && bishopY == kingY - 3) || (bishopX == kingX + 4 && bishopY == kingY - 4) ||
+                (bishopX == kingX + 5 && bishopY == kingY - 5) || (bishopX == kingX + 6 && bishopY == kingY - 6) ||
+                (bishopX == kingX + 7 && bishopY == kingY - 7) || (bishopX == kingX + 8 && bishopY == kingY - 8) ||
+                (bishopX == kingX + 1 && bishopY == kingY + 1) || (bishopX == kingX + 2 && bishopY == kingY + 2) ||
+                (bishopX == kingX + 3 && bishopY == kingY + 3) || (bishopX == kingX + 4 && bishopY == kingY + 4) ||
+                (bishopX == kingX + 5 && bishopY == kingY + 5) || (bishopX == kingX + 6 && bishopY == kingY + 6) ||
+                (bishopX == kingX + 7 && bishopY == kingY + 7) || (bishopX == kingX + 8 && bishopY == kingY + 8))) {
+        return 3
+    }
+    if (rookX == kingX || rookY == kingY) {
+        return 1
+    }
+    if ((bishopX == kingX - 1 && bishopY == kingX - 1) || (bishopX == kingX - 2 && bishopX == kingX - 2) ||
+        (bishopX == kingX - 3 && bishopY == kingY - 3) || (bishopX == kingX - 4 && bishopY == kingY - 4) ||
+        (bishopX == kingX - 5 && bishopY == kingY - 5) || (bishopX == kingX - 6 && bishopY == kingY - 6) ||
+        (bishopX == kingX - 7 && bishopY == kingY - 7) || (bishopX == kingX - 8 && bishopY == kingY - 8) ||
+        (bishopX == kingX - 1 && bishopY == kingY + 1) || (bishopX == kingX - 2 && bishopY == kingY + 2) ||
+        (bishopX == kingX - 3 && bishopY == kingY + 3) || (bishopX == kingX - 4 && bishopY == kingY + 4) ||
+        (bishopX == kingX - 5 && bishopY == kingY + 5) || (bishopX == kingX - 6 && bishopY == kingY + 6) ||
+        (bishopX == kingX - 7 && bishopY == kingY + 7) || (bishopX == kingX - 8 && bishopY == kingY + 8) ||
+        (bishopX == kingX + 1 && bishopY == kingY - 1) || (bishopX == kingX + 2 && bishopY == kingY - 2) ||
+        (bishopX == kingX + 3 && bishopY == kingY - 3) || (bishopX == kingX + 4 && bishopY == kingY - 4) ||
+        (bishopX == kingX + 5 && bishopY == kingY - 5) || (bishopX == kingX + 6 && bishopY == kingY - 6) ||
+        (bishopX == kingX + 7 && bishopY == kingY - 7) || (bishopX == kingX + 8 && bishopY == kingY - 8) ||
+        (bishopX == kingX + 1 && bishopY == kingY + 1) || (bishopX == kingX + 2 && bishopY == kingY + 2) ||
+        (bishopX == kingX + 3 && bishopY == kingY + 3) || (bishopX == kingX + 4 && bishopY == kingY + 4) ||
+        (bishopX == kingX + 5 && bishopY == kingY + 5) || (bishopX == kingX + 6 && bishopY == kingY + 6) ||
+        (bishopX == kingX + 7 && bishopY == kingY + 7) || (bishopX == kingX + 8 && bishopY == kingY + 8)) {
+        return 2
+    }
+    return 0
+}
 
 /**
  * Простая (2 балла)
@@ -199,6 +241,9 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
         if (a > c && b < d) return b - a
         if (a > c && b > d) return d - a
         if (c < b && d > b) return b - c
+        if (a == c && b == d) return b - a
+        if (a == c && b < d) return b - a
+        if (a == c && b > d) return d - c
     }
     return -1
 }
