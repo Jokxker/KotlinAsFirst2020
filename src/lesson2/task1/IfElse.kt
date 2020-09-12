@@ -4,6 +4,7 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import kotlin.math.max
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -89,7 +90,25 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+    val dis = ((t1 * v1) + (t2 * v2) + (t3 * v3)) / 2
+    if ((t1 * v1) >= dis) {
+        return dis / ((t1 * v1) / t1)
+    }
+    if ((t2 * v2) >= dis) {
+        return dis / ((t2 * v2) / t2)
+    }
+    if ((t3 * v3) >= dis) {
+        return dis / ((t3 * v3) / t3)
+    }
+    if (((t1 * v1) + (t2 * v2)) >= dis) {
+        return ((dis - v1) / v2) + t1
+    }
+    if (((t2 * v2) + (t3 * v3)) >= dis) {
+        return ((dis - v3) / v2) + t3
+    }
+    return dis
+}
 
 /**
  * Простая (2 балла)
@@ -104,7 +123,18 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    if (rookX1 == kingX || rookY1 == kingY && rookX2 == kingX || rookY2 == kingY) {
+        return 3
+    }
+    if (rookX2 == kingX || rookY2 == kingY) {
+        return 2
+    }
+    if (rookX1 == kingX || rookY1 == kingY) {
+        return 1
+    }
+    return  0
+}
 
 /**
  * Простая (2 балла)
@@ -130,7 +160,29 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    if ((c < (a + b)) && (a < (b + c)) && (b < (a + c))) {
+        if (a >= b && a >= c) {
+            val signA = c.pow(2) + b.pow(2) - a.pow(2)
+            if (signA > 0) return 0
+            if (signA == 0.0) return 1
+            if (signA < 0) return 2
+        }
+        if (b >= a && b >= c) {
+            val signB = a.pow(2) + c.pow(2) - b.pow(2)
+            if (signB > 0) return 0
+            if (signB == 0.0) return 1
+            if (signB < 0) return 2
+        }
+        if (c >= a && c >= b) {
+            val signC = a.pow(2) + b.pow(2) - c.pow(2)
+            if (signC > 0) return 0
+            if (signC == 0.0) return 1
+            if (signC < 0) return 2
+        }
+    }
+    return -1
+}
 
 /**
  * Средняя (3 балла)
@@ -140,4 +192,13 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    if (a < d) {
+        if (b == c || a == d) return 0
+        if (a < c && b > d) return d - c
+        if (a > c && b < d) return b - a
+        if (a > c && b > d) return d - a
+        if (c < b && d > b) return b - c
+    }
+    return -1
+}
