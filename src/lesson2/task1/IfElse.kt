@@ -91,21 +91,21 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-    val dis = ((t1 * v1) + (t2 * v2) + (t3 * v3)) / 2
+    var dis = ((t1 * v1) + (t2 * v2) + (t3 * v3)) / 2
     if ((t1 * v1) >= dis) {
-        return dis / ((t1 * v1) / t1)
+        return dis / v1
     }
     if ((t2 * v2) >= dis) {
-        return dis / ((t2 * v2) / t2)
+        return dis / v2
     }
     if ((t3 * v3) >= dis) {
-        return dis / ((t3 * v3) / t3)
+        return dis / v3
     }
     if (((t1 * v1) + (t2 * v2)) >= dis) {
-        return ((dis - v1) / v2) + t1
+        return (dis - v1) / v2 + t1
     }
     if (((t2 * v2) + (t3 * v3)) >= dis) {
-        return ((dis - v3) / v2) + t3
+        return (dis - v2) / v3 + t2
     }
     return dis
 }
