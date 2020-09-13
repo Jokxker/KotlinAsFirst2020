@@ -150,8 +150,8 @@ fun rookOrBishopThreatens(
     val bX = bishopX
     val bY = bishopY
     return when {
-        (rX == kX || rY == kY) && (bX - bY == kX - kY || bX + bY == kX + kY || bX - bY < (kX - kY) - 2) -> 3
-        bX - bY == kX - kY || bX + bY == kX + kY || bX - bY < (kX - kY) - 2 -> 2
+        (rX == kX || rY == kY) && (bX - bY == kX - kY || bX + bY == kX + kY || bX - bY < (kX - kY) - 8) -> 3
+        bX - bY == kX - kY || bX + bY == kX + kY || bX - bY < (kX - kY) - 8 -> 2
         rX == kX || rY == kY -> 1
         else -> 0
     }
