@@ -70,15 +70,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    if (age > 0 && age < 200) {
-        if ((age % 10) == 0 || age > 4 && age < 20 || age > 104 && age < 120) return "$age лет"
-        if ((age % 10) == 1) return "$age год"
-        if ((age % 10) > 4) return "$age лет"
-        if ((age % 10) > 1) return "$age года"
+    return when {
+        age % 10 == 0 || age > 4 && age < 20 || age > 104 && age < 120 -> "$age лет"
+        age % 10 == 1 -> "$age год"
+        age % 10 > 4 -> "$age лет"
+        age % 10 > 1 -> "$age года"
+        else -> "$age"
     }
-    return null.toString()
 }
-
 /**
  * Простая (2 балла)
  *
@@ -91,25 +90,16 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
-    var dis = ((t1 * v1) + (t2 * v2) + (t3 * v3)) / 2
-    if ((t1 * v1) >= dis) {
-        return dis / v1
+    val dis = ((t1 * v1) + (t2 * v2) + (t3 * v3)) / 2
+    val dis1 = t1 * v1
+    val dis2 = t2 * v2
+    val dis3 = t3 * v3
+    return when {
+        dis1 > dis -> dis / v1
+        (dis1 + dis2) > dis -> t1 + ((dis - dis1) / v2)
+        else -> (dis - dis1 - dis2) / v3 + t1 + t2
     }
-    if ((t2 * v2) >= dis) {
-        return dis / v2
-    }
-    if ((t3 * v3) >= dis) {
-        return dis / v3
-    }
-    if (((t1 * v1) + (t2 * v2)) >= dis) {
-        return (dis - v1) / v2 + t1
-    }
-    if (((t2 * v2) + (t3 * v3)) >= dis) {
-        return (dis - v2) / v3 + t2
-    }
-    return dis
 }
-
 /**
  * Простая (2 балла)
  *
@@ -124,16 +114,12 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    if ((rookX1 == kingX || rookY1 == kingY) && (rookX2 == kingX || rookY2 == kingY)) {
-        return 3
+    return when {
+        (rookX1 == kingX || rookY1 == kingY) && (rookX2 == kingX || rookY2 == kingY) -> 3
+        rookX2 == kingX || rookY2 == kingY -> 2
+        rookX1 == kingX || rookY1 == kingY -> 1
+        else -> 0
     }
-    if (rookX2 == kingX || rookY2 == kingY) {
-        return 2
-    }
-    if (rookX1 == kingX || rookY1 == kingY) {
-        return 1
-    }
-    return  0
 }
 
 /**
@@ -204,26 +190,16 @@ fun rookOrBishopThreatens(
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     if ((c < (a + b)) && (a < (b + c)) && (b < (a + c))) {
-        if (a >= b && a >= c) {
-            val signA = c.pow(2) + b.pow(2) - a.pow(2)
-            if (signA > 0) return 0
-            if (signA == 0.0) return 1
-            if (signA < 0) return 2
+        val max = maxOf(a, b, c)
+        val min = minOf(a, b, c)
+        val middle = (a + b + c) - max - min
+        val sign = min.pow(2) + middle.pow(2) - max.pow(2)
+        return when {
+            sign > 0 -> 0
+            sign == 0.0 -> 1
+            else -> 2
         }
-        if (b >= a && b >= c) {
-            val signB = a.pow(2) + c.pow(2) - b.pow(2)
-            if (signB > 0) return 0
-            if (signB == 0.0) return 1
-            if (signB < 0) return 2
-        }
-        if (c >= a && c >= b) {
-            val signC = a.pow(2) + b.pow(2) - c.pow(2)
-            if (signC > 0) return 0
-            if (signC == 0.0) return 1
-            if (signC < 0) return 2
-        }
-    }
-    return -1
+    } else return -1
 }
 
 /**
@@ -236,14 +212,16 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     if (a <= d) {
-        if (b == c || a == d) return 0
-        if (a < c && b >= d) return d - c
-        if (a > c && b <= d) return b - a
-        if (a > c && b >= d) return d - a
-        if (c < b && b <= d) return b - c
-        if (a == c && b == d) return b - a
-        if (a == c && b < d) return b - a
-        if (a == c && b > d) return d - c
-    }
-    return -1
+        return when {
+            b == c || a == d -> 0
+            a < c && b >= d -> d - c
+            a > c && b <= d -> b - a
+            a > c && b >= d -> d - a
+            c < b && d >= b -> b - c
+            a == c && b == d -> b - a
+            a == c && b < d -> b - a
+            a == c && b > d -> d - c
+            else -> -1
+        }
+    } else return -1
 }
