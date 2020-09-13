@@ -114,10 +114,16 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
+    val kX = kingX
+    val kY = kingY
+    val rX1 = rookX1
+    val rY1 = rookY1
+    val rX2 = rookX2
+    val rY2 = rookY2
     return when {
-        (rookX1 == kingX || rookY1 == kingY) && (rookX2 == kingX || rookY2 == kingY) -> 3
-        rookX2 == kingX || rookY2 == kingY -> 2
-        rookX1 == kingX || rookY1 == kingY -> 1
+        (rX1 == kX || rY1 == kY) && (rX2 == kX || rY2 == kY) -> 3
+        rX2 == kX || rY2 == kY -> 2
+        rX1 == kX || rY1 == kY -> 1
         else -> 0
     }
 }
@@ -137,47 +143,18 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int {
-    if ((rookX == kingX || rookY == kingY) &&
-        ((bishopX == kingX - 1 && bishopY == kingY - 1) || (bishopX == kingX - 2 && bishopY == kingY - 2) ||
-                (bishopX == kingX - 3 && bishopY == kingY - 3) || (bishopX == kingX - 4 && bishopY == kingY - 4) ||
-                (bishopX == kingX - 5 && bishopY == kingY - 5) || (bishopX == kingX - 6 && bishopY == kingY - 6) ||
-                (bishopX == kingX - 7 && bishopY == kingY - 7) || (bishopX == kingX - 8 && bishopY == kingY - 8) ||
-                (bishopX == kingX - 1 && bishopY == kingY + 1) || (bishopX == kingX - 2 && bishopY == kingY + 2) ||
-                (bishopX == kingX - 3 && bishopY == kingY + 3) || (bishopX == kingX - 4 && bishopY == kingY + 4) ||
-                (bishopX == kingX - 5 && bishopY == kingY + 5) || (bishopX == kingX - 6 && bishopY == kingY + 6) ||
-                (bishopX == kingX - 7 && bishopY == kingY + 7) || (bishopX == kingX - 8 && bishopY == kingY + 8) ||
-                (bishopX == kingX + 1 && bishopY == kingY - 1) || (bishopX == kingX + 2 && bishopY == kingY - 2) ||
-                (bishopX == kingX + 3 && bishopY == kingY - 3) || (bishopX == kingX + 4 && bishopY == kingY - 4) ||
-                (bishopX == kingX + 5 && bishopY == kingY - 5) || (bishopX == kingX + 6 && bishopY == kingY - 6) ||
-                (bishopX == kingX + 7 && bishopY == kingY - 7) || (bishopX == kingX + 8 && bishopY == kingY - 8) ||
-                (bishopX == kingX + 1 && bishopY == kingY + 1) || (bishopX == kingX + 2 && bishopY == kingY + 2) ||
-                (bishopX == kingX + 3 && bishopY == kingY + 3) || (bishopX == kingX + 4 && bishopY == kingY + 4) ||
-                (bishopX == kingX + 5 && bishopY == kingY + 5) || (bishopX == kingX + 6 && bishopY == kingY + 6) ||
-                (bishopX == kingX + 7 && bishopY == kingY + 7) || (bishopX == kingX + 8 && bishopY == kingY + 8))) {
-        return 3
+    val kX = kingX
+    val kY = kingY
+    val rX = rookX
+    val rY = rookY
+    val bX = bishopX
+    val bY = bishopY
+    return when {
+        (rX == kX || rY == kY) && (bX - bY == kX - kY || bX - bY < kX - kY) -> 3
+        bX - bY == kX - kY || bX - bY < kX - kY -> 2
+        rX == kX || rY == kY -> 1
+        else -> 0
     }
-    if (rookX == kingX || rookY == kingY) {
-        return 1
-    }
-    if ((bishopX == kingX - 1 && bishopY == kingY - 1) || (bishopX == kingX - 2 && bishopY == kingY - 2) ||
-        (bishopX == kingX - 3 && bishopY == kingY - 3) || (bishopX == kingX - 4 && bishopY == kingY - 4) ||
-        (bishopX == kingX - 5 && bishopY == kingY - 5) || (bishopX == kingX - 6 && bishopY == kingY - 6) ||
-        (bishopX == kingX - 7 && bishopY == kingY - 7) || (bishopX == kingX - 8 && bishopY == kingY - 8) ||
-        (bishopX == kingX - 1 && bishopY == kingY + 1) || (bishopX == kingX - 2 && bishopY == kingY + 2) ||
-        (bishopX == kingX - 3 && bishopY == kingY + 3) || (bishopX == kingX - 4 && bishopY == kingY + 4) ||
-        (bishopX == kingX - 5 && bishopY == kingY + 5) || (bishopX == kingX - 6 && bishopY == kingY + 6) ||
-        (bishopX == kingX - 7 && bishopY == kingY + 7) || (bishopX == kingX - 8 && bishopY == kingY + 8) ||
-        (bishopX == kingX + 1 && bishopY == kingY - 1) || (bishopX == kingX + 2 && bishopY == kingY - 2) ||
-        (bishopX == kingX + 3 && bishopY == kingY - 3) || (bishopX == kingX + 4 && bishopY == kingY - 4) ||
-        (bishopX == kingX + 5 && bishopY == kingY - 5) || (bishopX == kingX + 6 && bishopY == kingY - 6) ||
-        (bishopX == kingX + 7 && bishopY == kingY - 7) || (bishopX == kingX + 8 && bishopY == kingY - 8) ||
-        (bishopX == kingX + 1 && bishopY == kingY + 1) || (bishopX == kingX + 2 && bishopY == kingY + 2) ||
-        (bishopX == kingX + 3 && bishopY == kingY + 3) || (bishopX == kingX + 4 && bishopY == kingY + 4) ||
-        (bishopX == kingX + 5 && bishopY == kingY + 5) || (bishopX == kingX + 6 && bishopY == kingY + 6) ||
-        (bishopX == kingX + 7 && bishopY == kingY + 7) || (bishopX == kingX + 8 && bishopY == kingY + 8)) {
-        return 2
-    }
-    return 0
 }
 
 /**
