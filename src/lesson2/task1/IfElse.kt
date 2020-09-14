@@ -3,6 +3,8 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import java.lang.Math.abs
+import java.lang.Math.min
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -147,11 +149,10 @@ fun rookOrBishopThreatens(
     val kY = kingY
     val rX = rookX
     val rY = rookY
-    val bX = bishopX
-    val bY = bishopY
+    val bishop = abs(kingX - bishopX) == abs(kingY - bishopY)
     return when {
-        (rX == kX || rY == kY) && (bX + bY == kX + kY || bX - bY == kX - kY) -> 3
-        bX + bY == kX + kY || bX - bY == kX - kY -> 2
+        (rX == kX || rY == kY) && bishop -> 3
+        bishop -> 2
         rX == kX || rY == kY -> 1
         else -> 0
     }
@@ -188,17 +189,5 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if (a <= d) {
-        return when {
-            b == c || a == d -> 0
-            a < c && b >= d -> d - c
-            a > c && b <= d -> b - a
-            a > c && b >= d -> d - a
-            c < b && d >= b -> b - c
-            a == c && b == d -> b - a
-            a == c && b < d -> b - a
-            a == c && b > d -> d - c
-            else -> -1
-        }
-    } else return -1
+    return max(-1, min(b, d) - max(a, c))
 }
