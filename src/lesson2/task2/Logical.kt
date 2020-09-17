@@ -78,10 +78,7 @@ fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
 ): Boolean {
-    return when {
-        r2 < r1 -> false
-        else -> (x1 - x2).pow(2) + (y1 - y2).pow(2) <= (r2 - r1).pow(2)
-    }
+        return r1 <= r2 && (x1 - x2).pow(2) + (y1 - y2).pow(2) <= (r2 - r1).pow(2)
 }
 
 /**
