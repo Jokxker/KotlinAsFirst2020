@@ -4,6 +4,7 @@ package lesson2.task2
 
 import lesson1.task1.sqr
 import kotlin.math.abs
+import kotlin.math.pow
 
 /**
  * Пример
@@ -77,7 +78,10 @@ fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
 ): Boolean {
-    return sqr(x1 - y1) + sqr(x2 - y2) >= sqr(r1 - r2)
+    return when {
+        r2 < r1 -> false
+        else -> (x1 - x2).pow(2) + (y1 - y2).pow(2) <= (r2 - r1).pow(2)
+    }
 }
 
 /**
