@@ -68,5 +68,6 @@ class Tests {
         assertFalse(brickPasses(6, 5, 4, 3, 6))
         assertTrue(brickPasses(3, 2, 1, 1, 2))
         assertFalse(lesson2.task2.brickPasses(2, 2, 1, 1, 1))
+        assertFalse(lesson2.task2.brickPasses(1000, 1, 934, 213, 752))
     }
 }
