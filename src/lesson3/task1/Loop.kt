@@ -76,7 +76,7 @@ fun digitNumber(n: Int): Int {
     var count = 1
     var num = n
     for (i in 1..n) {
-        if (num < 9 || num < -9) {
+        if (num < 10 || num < -10) {
             return count
         } else {
             num /= 10
