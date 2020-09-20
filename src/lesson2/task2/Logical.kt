@@ -48,22 +48,11 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    val m = month
-    val y = year
-    if (y % 4 != 0 || y % 100 == 0 && y % 400 != 0) {
-        return when {
-            m == 2 -> 28
-            m >= 7 && m % 2 == 0 -> 31
-            m <= 7 && m % 2 > 0 -> 31
-            else -> 30
-        }
-    } else {
-        return when {
-            m == 2 -> 29
-            m >= 7 && m % 2 == 0 -> 31
-            m <= 7 && m % 2 > 0 -> 31
-            else -> 30
-        }
+    return when {
+        month == 2 -> if (year % 4 != 0 || year % 100 == 0 && year % 400 != 0) 28 else 29
+        month >= 7 && month % 2 == 0 -> 31
+        month <= 7 && month % 2 > 0 -> 31
+        else -> 30
     }
 }
 
@@ -77,9 +66,8 @@ fun daysInMonth(month: Int, year: Int): Int {
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean {
-        return r1 <= r2 && (x1 - x2).pow(2) + (y1 - y2).pow(2) <= (r2 - r1).pow(2)
-}
+) = r1 <= r2 && (x1 - x2).pow(2) + (y1 - y2).pow(2) <= (r2 - r1).pow(2)
+
 
 /**
  * Средняя (3 балла)

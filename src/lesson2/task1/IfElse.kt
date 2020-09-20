@@ -116,16 +116,12 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    val kX = kingX
-    val kY = kingY
-    val rX1 = rookX1
-    val rY1 = rookY1
-    val rX2 = rookX2
-    val rY2 = rookY2
+    val rook1 = rookX1 == kingX || rookY1 == kingY
+    val rook2 = rookX2 == kingX || rookY2 == kingY
     return when {
-        (rX1 == kX || rY1 == kY) && (rX2 == kX || rY2 == kY) -> 3
-        rX2 == kX || rY2 == kY -> 2
-        rX1 == kX || rY1 == kY -> 1
+        rook1 && rook2 -> 3
+        rook2 -> 2
+        rook1 -> 1
         else -> 0
     }
 }
@@ -145,15 +141,12 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int {
-    val kX = kingX
-    val kY = kingY
-    val rX = rookX
-    val rY = rookY
+    val rook = rookX == kingX || rookY == kingY
     val bishop = abs(kingX - bishopX) == abs(kingY - bishopY)
     return when {
-        (rX == kX || rY == kY) && bishop -> 3
+        rook && bishop -> 3
         bishop -> 2
-        rX == kX || rY == kY -> 1
+        rook -> 1
         else -> 0
     }
 }
@@ -167,17 +160,17 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    if ((c < (a + b)) && (a < (b + c)) && (b < (a + c))) {
-        val max = maxOf(a, b, c)
-        val min = minOf(a, b, c)
-        val middle = (a + b + c) - max - min
-        val sign = min.pow(2) + middle.pow(2) - max.pow(2)
-        return when {
+    val max = maxOf(a, b, c)
+    val min = minOf(a, b, c)
+    val middle = (a + b + c) - max - min
+    val sign = min.pow(2) + middle.pow(2) - max.pow(2)
+    return if (middle + min > max && middle + max > min && max + min > middle) {
+        when {
             sign > 0 -> 0
             sign == 0.0 -> 1
             else -> 2
         }
-    } else return -1
+    } else -1
 }
 
 /**
@@ -188,6 +181,4 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return max(-1, min(b, d) - max(a, c))
-}
+fun segmentLength(a: Int, b: Int, c: Int, d: Int) = max(-1, min(b, d) - max(a, c))
