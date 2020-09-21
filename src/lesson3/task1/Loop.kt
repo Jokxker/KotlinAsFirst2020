@@ -3,6 +3,7 @@
 package lesson3.task1
 
 import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -89,21 +90,48 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var a = 1
+    var b = 1
+    for (i in 3..n) {
+        val c = a + b
+        a = b
+        b = c
+    }
+    return b
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var num = 0
+    for (i in 2..n) {
+        if (n % i == 0) {
+            num = i
+            break
+        }
+    }
+    return num
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var num = 0
+    for (i in n - 1 downTo 1) {
+        if (n % i == 0) {
+            num = i
+            break
+        }
+    }
+    return num
+}
 
 /**
  * Простая (2 балла)
@@ -121,7 +149,15 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var n = x
+    var count = 0
+    while (n != 1) {
+        count++
+        if (n % 2 == 0) n /= 2 else n = 3 * n + 1
+    }
+    return count
+}
 
 /**
  * Средняя (3 балла)
@@ -129,7 +165,16 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    var k = 0
+    for (i in 1..Int.MAX_VALUE) {
+        if (i % m == 0 && i % n == 0) {
+            k = i
+            break
+        }
+    }
+    return k
+}
 
 /**
  * Средняя (3 балла)
