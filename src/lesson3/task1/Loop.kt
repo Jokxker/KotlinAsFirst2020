@@ -167,19 +167,10 @@ fun collatzSteps(x: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     var k = 0
-    if (m % 2 != 0 && n % 2 != 0) {
-        for (i in 1..Int.MAX_VALUE step 2) {
-            if (i % m == 0 && i % n == 0) {
-                k = i
-                break
-            }
-        }
-    } else {
-        for (i in 1..Int.MAX_VALUE) {
-            if (i % m == 0 && i % n == 0) {
-                k = i
-                break
-            }
+    for (i in 1..Int.MAX_VALUE) {
+        if ((m * i) % n == 0) {
+            k = m * i
+            break
         }
     }
     return k
