@@ -237,7 +237,19 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    var num = n
+    var numRever = 0
+    while (num > 9) {
+        numRever *= 10
+        numRever += num % 10
+        num /= 10
+    }
+    numRever *= 10
+    numRever += num
+    if (numRever == n) return true
+    return false
+}
 
 /**
  * Средняя (3 балла)
@@ -247,7 +259,15 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var num = n
+    val number = n % 10
+    while (num > 9) {
+        num /= 10
+        if (num % 10 != number) return true
+    }
+    return false
+}
 
 /**
  * Средняя (4 балла)
