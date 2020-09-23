@@ -202,7 +202,6 @@ fun isCoPrime(m: Int, n: Int): Boolean {
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     var i = 0
     while (i * i >= 0) {
-        //if (m == Int.MAX_VALUE || n == Int.MAX_VALUE) return false
         if (i * i in m..n) return true
         i++
     }
