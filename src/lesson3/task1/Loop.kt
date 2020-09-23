@@ -184,14 +184,13 @@ fun lcm(m: Int, n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var k = true
-    for (i in Int.MAX_VALUE downTo 2) {
-        if (m % i == 0 && n % i == 0) {
-            k = false
-            break
-        }
+    var numM = m
+    var numN = n
+    while (numM < numN || numN < numM) {
+        if (numM > numN) numM -= numN else numN -= numM
     }
-    return k
+    if (numM == 1) return true
+    return false
 }
 
 /**
@@ -201,7 +200,15 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    var i = 1
+    while (i * i <= maxOf(m, n)) {
+        if (m == Int.MAX_VALUE || n == Int.MAX_VALUE) return false
+        if (i * i in m..n) return true
+        i++
+    }
+    return false
+}
 
 /**
  * Средняя (3 балла)
@@ -210,7 +217,18 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var num = n
+    var numRever = 0
+    while (num > 9) {
+        numRever *= 10
+        numRever += num % 10
+        num /= 10
+    }
+    numRever *= 10
+    numRever += num
+    return numRever
+}
 
 /**
  * Средняя (3 балла)
