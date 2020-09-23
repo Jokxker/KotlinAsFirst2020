@@ -160,6 +160,7 @@ class Tests {
     @Test
     @Tag("3")
     fun squareBetweenExists() {
+        assertFalse(squareBetweenExists(2147395601, Int.MAX_VALUE))
         assertTrue(lesson3.task1.squareBetweenExists(0,0))
         assertTrue(squareBetweenExists(1, 1))
         assertTrue(squareBetweenExists(21, 28))
@@ -168,7 +169,6 @@ class Tests {
         assertFalse(squareBetweenExists(51, 61))
         assertFalse(squareBetweenExists(999, 1001))
         assertTrue(squareBetweenExists(152374337, 152423715))
-        assertFalse(squareBetweenExists(2147395601, Int.MAX_VALUE))
     }
 
     @Test
