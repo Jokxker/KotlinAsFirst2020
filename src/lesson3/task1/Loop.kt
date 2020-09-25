@@ -300,7 +300,33 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var i = 0
+    var sumDig = 0
+    var square = 0
+    var countDig = 0
+    var dec = 0
+    var reqDig = 0
+    while (sumDig < n) {
+        i++
+        square = i * i
+        countDig = 1
+        dec = 10
+        while (square / dec != 0) {
+            dec *= 10
+            countDig += 1
+        }
+        sumDig += countDig
+    }
+    sumDig -= countDig
+    dec /= 10
+    while (sumDig != n) {
+        reqDig = square / dec % 10
+        dec /= 10
+        sumDig += 1
+    }
+    return reqDig
+}
 
 /**
  * Сложная (5 баллов)
@@ -311,4 +337,30 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var i = 0
+    var sumDig = 0
+    var numFib = 0
+    var countDig = 0
+    var dec = 0
+    var reqDig = 0
+    while (sumDig < n) {
+        i++
+        numFib = fib(i)
+        countDig = 1
+        dec = 10
+        while (numFib / dec != 0) {
+            dec *= 10
+            countDig += 1
+        }
+        sumDig += countDig
+    }
+    sumDig -= countDig
+    dec /= 10
+    while (sumDig != n) {
+        reqDig = numFib / dec % 10
+        dec /= 10
+        sumDig += 1
+    }
+    return reqDig
+}
