@@ -301,18 +301,18 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var i = 0
+    var i = 0L
     var sumDig = 0
-    var square = 0
+    var square = 0L
     var countDig = 0
-    var dec = 0
-    var reqDig = 0
+    var dec = 0L
+    var reqDig = 0L
     while (sumDig < n) {
         i++
         square = i * i
         countDig = 1
         dec = 10
-        while (square / dec != 0) {
+        while (square / dec != 0L) {
             dec *= 10
             countDig += 1
         }
@@ -325,7 +325,7 @@ fun squareSequenceDigit(n: Int): Int {
         dec /= 10
         sumDig += 1
     }
-    return reqDig
+    return reqDig.toInt()
 }
 
 /**
@@ -357,6 +357,7 @@ fun fibSequenceDigit(n: Int): Int {
     }
     sumDig -= countDig
     dec /= 10
+    if (numFib >= 1000000000) dec = 1000000000
     while (sumDig != n) {
         reqDig = numFib / dec % 10
         dec /= 10
