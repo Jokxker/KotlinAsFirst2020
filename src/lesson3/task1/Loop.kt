@@ -338,18 +338,18 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var i = 0
+    var i = 0L
     var sumDig = 0
-    var numFib = 0
+    var numFib = 0L
     var countDig = 0
-    var dec = 0
-    var reqDig = 0
+    var dec = 0L
+    var reqDig = 0L
     while (sumDig < n) {
         i++
-        numFib = fib(i)
+        numFib = fib(i.toInt()).toLong()
         countDig = 1
         dec = 10
-        while (numFib / dec != 0) {
+        while (numFib / dec != 0L) {
             dec *= 10
             countDig += 1
         }
@@ -357,11 +357,10 @@ fun fibSequenceDigit(n: Int): Int {
     }
     sumDig -= countDig
     dec /= 10
-    if (numFib >= 1000000000) dec = 1000000000
     while (sumDig != n) {
         reqDig = numFib / dec % 10
         dec /= 10
         sumDig += 1
     }
-    return reqDig
+    return reqDig.toInt()
 }
