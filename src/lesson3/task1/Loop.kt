@@ -108,7 +108,7 @@ fun fib(n: Int): Int {
  */
 fun minDivisor(n: Int): Int {
     var num = n
-    for (i in 3..sqrt(n.toDouble()).toInt()) {
+    for (i in 2..sqrt(n.toDouble()).toInt()) {
         if (n % i == 0) {
             num = i
             break
