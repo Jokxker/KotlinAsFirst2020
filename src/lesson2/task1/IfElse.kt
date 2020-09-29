@@ -164,7 +164,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val min = minOf(a, b, c)
     val middle = (a + b + c) - max - min
     val sign = min.pow(2) + middle.pow(2) - max.pow(2)
-    return if (middle + min > max && middle + max > min && max + min > middle) {
+    return if (middle + min >= max) {
         when {
             sign > 0 -> 0
             sign == 0.0 -> 1
