@@ -122,16 +122,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var num = 0
-    for (i in n - 1 downTo 1) {
-        if (n % i == 0) {
-            num = i
-            break
-        }
-    }
-    return num
-}
+fun maxDivisor(n: Int) = n / minDivisor(n)
 
 /**
  * Простая (2 балла)
@@ -219,13 +210,11 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
 fun revert(n: Int): Int {
     var num = n
     var numRever = 0
-    while (num > 9) {
+    while (num > 0) {
         numRever *= 10
         numRever += num % 10
         num /= 10
     }
-    numRever *= 10
-    numRever += num
     return numRever
 }
 
@@ -238,19 +227,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    var num = n
-    var numRever = 0
-    while (num > 9) {
-        numRever *= 10
-        numRever += num % 10
-        num /= 10
-    }
-    numRever *= 10
-    numRever += num
-    if (numRever == n) return true
-    return false
-}
+fun isPalindrome(n: Int) = revert(n) == n
 
 /**
  * Средняя (3 балла)
