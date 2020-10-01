@@ -141,8 +141,7 @@ fun mean(list: List<Double>) = if (list.isEmpty()) 0.0 else list.sum() / list.si
 fun center(list: MutableList<Double>): MutableList<Double> {
     val mean = mean(list)
     for (i in 0 until list.size) {
-        val element = list[i]
-        list[i] = element - mean
+        list[i] -= mean
     }
     return list
 }
@@ -191,7 +190,12 @@ fun polynom(p: List<Int>, x: Int): Int {
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
+fun accumulate(list: MutableList<Int>): MutableList<Int> {
+    for (i in 1 until list.size) {
+        list[i] += list[i - 1]
+    }
+    return list
+}
 
 /**
  * Средняя (3 балла)
@@ -200,7 +204,20 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    var num = n
+    val result = mutableListOf<Int>()
+    while (num != 1) {
+        for (i in 2..n) {
+            if (num % i == 0) {
+                result.add(i)
+                num /= i
+                break
+            }
+        }
+    }
+    return result
+}
 
 /**
  * Сложная (4 балла)
