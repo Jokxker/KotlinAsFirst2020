@@ -238,7 +238,25 @@ fun factorizeToString(n: Int): String {
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var num = n
+    var b = 1
+    val countBase = mutableListOf<Int>()
+    while (b <= n) {
+        countBase.add(b)
+        b *= base
+    }
+    val result = mutableListOf<Int>()
+    for (i in countBase.size - 1 downTo 0) {
+        var count = 0
+        while (num - countBase[i] >= 0) {
+            num -= countBase[i]
+            count++
+        }
+        result.add(count)
+    }
+    return result
+}
 
 /**
  * Сложная (4 балла)
