@@ -270,7 +270,26 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val symbols = mutableListOf<String>()
+    for (i in 0..9) {
+        symbols.add(i.toString())
+    }
+    for (i in 'a'..'z') {
+        symbols.add(i.toString())
+    }
+    val conv = convert(n, base)
+    val convStr = mutableListOf<String>()
+    for (element in conv) {
+        if (element > 9) convStr.add(symbols[element])
+        else convStr.add(element.toString())
+    }
+    var str = ""
+    for (element in convStr) {
+        str += element
+    }
+    return str
+}
 
 /**
  * Средняя (3 балла)
