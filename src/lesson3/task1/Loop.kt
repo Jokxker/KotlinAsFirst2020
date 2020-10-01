@@ -156,14 +156,16 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = 0
-    for (i in 1..Int.MAX_VALUE) {
-        if ((m * i) % n == 0) {
-            k = m * i
-            break
-        }
+    var a = m
+    var b = n
+    while (b != 0) {
+        a %= b
+        val c = a
+        a = b
+        b = c
     }
-    return k
+    val gcd = a
+    return m * n / gcd
 }
 
 /**
@@ -226,7 +228,7 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int) = if (revert(n) == n) true else false
+fun isPalindrome(n: Int) = (revert(n) == n)
 
 /**
  * Средняя (3 балла)
