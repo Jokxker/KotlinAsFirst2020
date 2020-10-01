@@ -255,6 +255,7 @@ fun convert(n: Int, base: Int): List<Int> {
         }
         result.add(count)
     }
+    if (n == 0) result.add(n)
     return result
 }
 
