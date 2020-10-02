@@ -3,6 +3,7 @@
 package lesson3.task1
 
 import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -256,6 +257,21 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю.
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
+ * {
+var flag = true
+var sin = x
+for (i in 3..Int.MAX_VALUE step 2) {
+if (flag) {
+sin -= x.pow(i) / factorial(i)
+flag = false
+} else {
+sin += x.pow(i) / factorial(i)
+flag = true
+}
+if (sin < abs(eps)) return sin
+}
+return x
+}
  */
 fun sin(x: Double, eps: Double): Double = TODO()
 
