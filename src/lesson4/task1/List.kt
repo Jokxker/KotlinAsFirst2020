@@ -329,9 +329,9 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * (например, str.toInt(base)), запрещается.
  */
 fun decimalFromString(str: String, base: Int): Int {
-    val num = mutableListOf<Char>()
+    val num = mutableListOf<String>()
     for (i in str) {
-        num.add(i)
+        num.add(i.toString())
     }
     val countBase = mutableListOf<Int>()
     var countB = 1
@@ -339,22 +339,22 @@ fun decimalFromString(str: String, base: Int): Int {
         countBase.add(countB)
         countB *= base
     }
-    val numBase = mutableListOf<Char>()
+    val numBase = mutableListOf<String>()
     for (i in 'a'..'z') {
         if (i == 'a') {
             for (j in 0..9) {
-                numBase.add(j.toChar())
+                numBase.add(j.toString())
             }
         }
-        numBase.add(i)
+        numBase.add(i.toString())
     }
     var it = countBase.size - 1
     var result = 0
     for (el in num) {
         for ((index, element) in numBase.withIndex()) {
             if (el == element) result += index * countBase[it]
-            it--
         }
+        it--
     }
     return result
 }

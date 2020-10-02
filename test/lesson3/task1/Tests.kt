@@ -233,13 +233,13 @@ class Tests {
     @Test
     @Tag("4")
     fun squareSequenceDigit() {
-        assertEquals(7, squareSequenceDigit(368092))
         assertEquals(1, squareSequenceDigit(1))
         assertEquals(4, squareSequenceDigit(2))
         assertEquals(5, squareSequenceDigit(7))
         assertEquals(6, squareSequenceDigit(12))
         assertEquals(0, squareSequenceDigit(17))
         assertEquals(9, squareSequenceDigit(27))
+        assertEquals(7, squareSequenceDigit(368092))
     }
 
     @Test

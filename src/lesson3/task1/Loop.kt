@@ -296,31 +296,28 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var i = 0L
-    var sumDig = 0
-    var square = 0L
+    var it = 0L
     var countDig = 0
-    var dec = 0L
-    var reqDig = 0L
-    while (sumDig < n) {
-        i++
-        square = i * i
-        countDig = 1
-        dec = 10
-        while (square / dec != 0L) {
-            dec *= 10
-            countDig += 1
+    var num = 0L
+    while (countDig < n) {
+        it++
+        val square = it * it
+        var countSq = square
+        while (countSq > 9) {
+            countSq /= 10
+            countDig++
         }
-        sumDig += countDig
+        countDig++
+        if (countDig >= n) num = square
     }
-    sumDig -= countDig
-    dec /= 10
-    while (sumDig != n) {
-        reqDig = square / dec % 10
-        dec /= 10
-        sumDig += 1
+    return if (countDig > n) {
+        for (i in countDig - n downTo 1) {
+            num /= 10
+        }
+        (num % 10).toInt()
+    } else {
+        (num % 10).toInt()
     }
-    return reqDig.toInt()
 }
 
 /**
@@ -329,53 +326,30 @@ fun squareSequenceDigit(n: Int): Int {
  * Найти n-ю цифру последовательности из чисел Фибоначчи (см. функцию fib выше):
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
- *var it = 0L
-var countNum = 0
-var num = 0L
-while (countNum < n) {
-it++
-var koren = it * it
-while (koren > 9) {
-koren /= 10
-countNum++
-}
-countNum++
-if (countNum >= n) num = koren
-}
-return if (countNum > n) {
-for (i in countNum - n downTo 0) {
-num /= 10
-}
-(num % 10).toInt()
-} else {
-(num % 10).toInt()
-}
+ *
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var i = 0L
-    var sumDig = 0
-    var numFib = 0L
+    var it = 0L
     var countDig = 0
-    var dec = 0L
-    var reqDig = 0L
-    while (sumDig < n) {
-        i++
-        numFib = fib(i.toInt()).toLong()
-        countDig = 1
-        dec = 10
-        while (numFib / dec != 0L) {
-            dec *= 10
-            countDig += 1
+    var num = 0L
+    while (countDig < n) {
+        it++
+        val fib = fib(it.toInt()).toLong()
+        var countFib = fib
+        while (countFib > 9) {
+            countFib /= 10
+            countDig++
         }
-        sumDig += countDig
+        countDig++
+        if (countDig >= n) num = fib
     }
-    sumDig -= countDig
-    dec /= 10
-    while (sumDig != n) {
-        reqDig = numFib / dec % 10
-        dec /= 10
-        sumDig += 1
+    return if (countDig > n) {
+        for (i in countDig - n downTo 1) {
+            num /= 10
+        }
+        (num % 10).toInt()
+    } else {
+        (num % 10).toInt()
     }
-    return reqDig.toInt()
 }
