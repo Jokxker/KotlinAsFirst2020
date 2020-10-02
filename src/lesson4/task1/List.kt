@@ -272,10 +272,12 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     val symbols = mutableListOf<String>()
-    for (i in 0..9) {
-        symbols.add(i.toString())
-    }
     for (i in 'a'..'z') {
+        if (i == 'a') {
+            for (j in 0..9) {
+                symbols.add(j.toString())
+            }
+        }
         symbols.add(i.toString())
     }
     val conv = convert(n, base)
@@ -305,11 +307,11 @@ fun decimal(digits: List<Int>, base: Int): Int {
         countBase.add(countB)
         countB *= base
     }
-    var i = countBase.size - 1
+    var it = countBase.size - 1
     var decNum = 0
     for (element in digits) {
-        decNum += element * countBase[i]
-        i--
+        decNum += element * countBase[it]
+        it--
     }
     return decNum
 }
@@ -326,7 +328,36 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+    val num = mutableListOf<Char>()
+    for (i in str) {
+        num.add(i)
+    }
+    val countBase = mutableListOf<Int>()
+    var countB = 1
+    for (i in num.indices) {
+        countBase.add(countB)
+        countB *= base
+    }
+    val numBase = mutableListOf<Char>()
+    for (i in 'a'..'z') {
+        if (i == 'a') {
+            for (j in 0..9) {
+                numBase.add(j.toChar())
+            }
+        }
+        numBase.add(i)
+    }
+    var it = countBase.size - 1
+    var result = 0
+    for (el in num) {
+        for ((index, element) in numBase.withIndex()) {
+            if (el == element) result += index * countBase[it]
+            it--
+        }
+    }
+    return result
+}
 
 /**
  * Сложная (5 баллов)

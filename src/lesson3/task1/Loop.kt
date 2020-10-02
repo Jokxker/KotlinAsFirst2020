@@ -329,7 +329,27 @@ fun squareSequenceDigit(n: Int): Int {
  * Найти n-ю цифру последовательности из чисел Фибоначчи (см. функцию fib выше):
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
- *
+ *var it = 0L
+var countNum = 0
+var num = 0L
+while (countNum < n) {
+it++
+var koren = it * it
+while (koren > 9) {
+koren /= 10
+countNum++
+}
+countNum++
+if (countNum >= n) num = koren
+}
+return if (countNum > n) {
+for (i in countNum - n downTo 0) {
+num /= 10
+}
+(num % 10).toInt()
+} else {
+(num % 10).toInt()
+}
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
