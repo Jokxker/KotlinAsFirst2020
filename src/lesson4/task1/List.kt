@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson3.task1.digitNumber
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -387,4 +388,42 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val digN = digitNumber(n)
+    val russian = Array(4) { Array(20) {""} }
+    russian[0] = arrayOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять",
+        "десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
+        "семнадцать", "восемнадцать", "девятнадцать")
+    russian[1] = arrayOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят",
+        "восемьдесят", "девяносто")
+    russian[2] = arrayOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот",
+        "восемьсот", "девятьсот")
+    russian[3] = arrayOf("", "одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять",
+        "десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
+        "семнадцать", "восемнадцать", "девятнадцать")
+    val result = mutableListOf<String>()
+    val resultHund = mutableListOf<String>()
+    if (russian[2][n / 100000 % 10] != "") resultHund.add(russian[2][n / 100000 % 10])
+    if (n / 1000 % 100 in 11..19) {
+        if (russian[0][n / 1000 % 100] != "") resultHund.add(russian[0][n / 1000 % 100])
+    } else {
+        if (russian[1][n / 10000 % 10] != "") resultHund.add(russian[1][n / 10000 % 10])
+        if (russian[3][n / 1000 % 10] != "") resultHund.add(russian[3][n / 1000 % 10])
+    }
+    if (russian[2][n / 100 % 10] != "") result.add(russian[2][n / 100 % 10])
+    if (n % 100 in 11..19) {
+        if (russian[0][n % 100] != "") result.add(russian[0][n % 100])
+    } else {
+        if (russian[1][n / 10 % 10] != "") result.add(russian[1][n / 10 % 10])
+        if (russian[0][n % 10] != "") result.add(russian[0][n % 10])
+    }
+    var strRus = "тысяч"
+    if (digN < 4) return result.joinToString(separator = " ")
+    if (digN > 3) {
+        if (n / 1000 % 10 == 1) strRus = "тысяча"
+        if (n / 1000 % 10 in 2..4) strRus = "тысячи"
+        if (n / 100 % 100 in 11..14) strRus = "тысяч"
+    }
+    if (n % 1000 == 0) return resultHund.joinToString(separator = " ", postfix = " $strRus")
+    return resultHund.joinToString(separator = " ", postfix = " $strRus ") + result.joinToString(separator = " ")
+}
