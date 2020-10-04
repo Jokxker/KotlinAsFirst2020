@@ -430,7 +430,7 @@ fun russian(n: Int): String {
     if (digN > 3) {
         if (n / 1000 % 10 == 1) strRus = "тысяча"
         if (n / 1000 % 10 in 2..4) strRus = "тысячи"
-        if (n / 100 % 100 in 11..14) strRus = "тысяч"
+        if (n / 1000 % 100 in 11..14) strRus = "тысяч"
     }
     if (n % 1000 == 0) return resultHund.joinToString(separator = " ", postfix = " $strRus")
     return resultHund.joinToString(separator = " ", postfix = " $strRus ") + result.joinToString(separator = " ")
