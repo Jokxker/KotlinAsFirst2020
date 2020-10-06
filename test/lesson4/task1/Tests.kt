@@ -181,6 +181,7 @@ class Tests {
     @Test
     @Tag("3")
     fun convert() {
+        assertEquals(listOf(1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1), convert(649203, 2))
         assertEquals(listOf(1), convert(1, 2))
         assertEquals(listOf(0), convert(0, 2))
         assertEquals(listOf(1, 2, 1, 0), convert(100, 4))
