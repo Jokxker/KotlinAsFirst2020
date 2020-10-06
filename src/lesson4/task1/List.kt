@@ -155,6 +155,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
 fun times(a: List<Int>, b: List<Int>): Int {
+//    a.zip(b)
     var scal = 0
     for (i in a.indices) {
         scal += a[i] * b[i]
@@ -170,16 +171,9 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int {
-    var pol = 0
-    if (p.isNotEmpty()) {
-        pol = p[0]
-    }
-    for (i in 1 until p.size) {
-        pol += p[i] * x.toDouble().pow(i).toInt()
-    }
-    return pol
-}
+fun polynom(p: List<Int>, x: Int) =
+    if (p.isNotEmpty()) p.foldIndexed(0) { index, acc, i -> acc + i * (x.toDouble().pow(index)).toInt() }
+    else 0
 
 /**
  * Средняя (3 балла)
@@ -227,10 +221,7 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String {
-    val factor = factorize(n)
-    return factor.joinToString(separator = "*")
-}
+fun factorizeToString(n: Int) = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя (3 балла)
@@ -241,22 +232,12 @@ fun factorizeToString(n: Int): String {
  */
 fun convert(n: Int, base: Int): List<Int> {
     var num = n
-    var countB = 1L
-    val countBase = mutableListOf<Int>()
-    while (countB <= n) {
-        countBase.add(countB.toInt())
-        countB *= base
+    val result = mutableListOf<Int>(num % base)
+    while (num > base) {
+        num /= base
+        result.add(num % base)
     }
-    val result = mutableListOf<Int>()
-    for (i in countBase.size - 1 downTo 0) {
-        var count = 0
-        while (num - countBase[i] >= 0) {
-            num -= countBase[i]
-            count++
-        }
-        result.add(count)
-    }
-    if (n == 0) result.add(n)
+    result.reverse()
     return result
 }
 
