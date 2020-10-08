@@ -150,11 +150,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val res = mutableListOf<String>()
-    for (i in a.indices) {
-        if (b.contains(a[i])) {
-            if (!res.contains(a[i])) res.add(a[i])
-        }
-    }
+    (a zip b).map { (first, second) -> if (first == second) if (!res.contains(first)) res.add(first) }
     return res
 }
 
@@ -175,7 +171,24 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val res = mutableMapOf<String, String>()
+    for ((key, value) in mapA) {
+        if (mapA[key] !== mapB[key]) {
+            val a = mapA[key]
+            val b = mapB[key]
+            res[key] = "$a, $b"
+        }
+        if (mapA[key] == mapB[key]) res[key] = value
+    }
+    for ((key, value) in mapB) {
+        if (!mapA.containsKey(key)) res[key] = value
+    }
+    for ((key, value) in mapA) {
+        if (!mapB.containsKey(key)) res[key] = value
+    }
+    return res
+}
 
 /**
  * Средняя (4 балла)
