@@ -126,7 +126,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
     val remove = mutableListOf<String>()
-    for ((key, value) in a) {
+    for ((key, _) in a) {
         if (a[key] == b[key]) {
             remove.add(key)
         }
@@ -146,7 +146,9 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
     val res = mutableListOf<String>()
     for (i in a.indices) {
-        if (b.contains(a[i])) res.add(a[i])
+        if (b.contains(a[i])) {
+            if (!res.contains(a[i])) res.add(a[i])
+        }
     }
     return res
 }
