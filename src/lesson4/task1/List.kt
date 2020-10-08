@@ -154,7 +154,8 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>) = (a zip b).fold(0) { acc, (first, second) -> acc + first * second }
+fun times(a: List<Int>, b: List<Int>) =
+    (a zip b).fold(0) { acc, (first, second) -> acc + first * second }
 
 /**
  * Средняя (3 балла)
@@ -256,21 +257,7 @@ fun convertToString(n: Int, base: Int) =
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int {
-    val countBase = mutableListOf<Int>()
-    var countB = 1
-    for (i in digits.indices) {
-        countBase.add(countB)
-        countB *= base
-    }
-    var it = countBase.size - 1
-    var decNum = 0
-    for (element in digits) {
-        decNum += element * countBase[it]
-        it--
-    }
-    return decNum
-}
+fun decimal(digits: List<Int>, base: Int) = polynom(digits.reversed(), base)
 
 /**
  * Сложная (4 балла)
@@ -284,7 +271,8 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int) = decimal(str.map { if (it >= 'a') it - 'a' + 10 else it - '0' }, base)
+fun decimalFromString(str: String, base: Int) =
+    decimal(str.map { if (it >= 'a') it - 'a' + 10 else it - '0' }, base)
 
 /**
  * Сложная (5 баллов)
