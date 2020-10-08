@@ -164,6 +164,10 @@ class Tests {
             listOf(""),
             whoAreInBoth(listOf("", ""), listOf(""))
         )
+        assertEquals(
+            listOf(""),
+            whoAreInBoth(listOf("a", ""), listOf(""))
+        )
     }
 
     @Test
