@@ -149,13 +149,13 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val res = mutableListOf<String>()
+    val res = mutableSetOf<String>()
     for (i in a) {
         if (b.contains(i)) {
-            if (!res.contains(i)) res.add(i)
+            res.add(i)
         }
     }
-    return res
+    return res.toList()
 }
 
 /**
