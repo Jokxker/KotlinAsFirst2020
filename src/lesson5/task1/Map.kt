@@ -96,7 +96,21 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    val res = mutableMapOf<Int, List<String>>()
+    for ((name, grad) in grades) {
+        if (res.containsKey(grad)) {
+            val valueDo = res[grad]
+            if (valueDo != null) {
+                val value = listOf(name)
+                res[grad] = valueDo + value
+                continue
+            }
+        }
+        res[grad] = mutableListOf(name)
+    }
+    return res
+}
 
 /**
  * Простая (2 балла)
@@ -204,7 +218,20 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
+    val res = mutableMapOf<String, Double>()
+    for ((first, second) in stockPrices) {
+        if (res.containsKey(first)) {
+            val num = res[first]
+            if (num != null) {
+                res[first] = (second + num) / 2
+                continue
+            }
+        }
+        res[first] = second
+    }
+    return res
+}
 
 /**
  * Средняя (4 балла)
