@@ -130,6 +130,7 @@ class Tests {
     @Tag("2")
     fun subtractOf() {
         val from = mutableMapOf("a" to "z", "b" to "c")
+        val fromTwo = mutableMapOf("" to "")
 
         subtractOf(from, mapOf())
         assertEquals(mapOf("a" to "z", "b" to "c"), from)
@@ -139,6 +140,9 @@ class Tests {
 
         subtractOf(from, mapOf("a" to "z"))
         assertEquals(mapOf("b" to "c"), from)
+
+        subtractOf(fromTwo, mapOf("\"Et(7\n$" to "U{E03p6", "" to "O"))
+        assertEquals(mapOf("" to ""), fromTwo)
     }
 
     @Test
