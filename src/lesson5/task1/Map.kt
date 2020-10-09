@@ -257,7 +257,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     var str = ""
     var price = Double.MAX_VALUE
     val check = mutableListOf<String>()
-    for ((key, value) in stuff) {
+    for ((_, value) in stuff) {
         check.add(value.first)
     }
     if (!check.contains(kind)) return null
@@ -281,6 +281,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     var count = 0
+    if (chars.isEmpty() && word == "") return true
     if (chars.isEmpty()) return false
     for (i in chars) {
         if (word.contains(i)) count++
