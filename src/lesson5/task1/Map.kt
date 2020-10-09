@@ -253,7 +253,18 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    var str = ""
+    var price = Double.MAX_VALUE
+    for ((key, value) in stuff) {
+        if (value.first == kind && value.second < price) {
+            str = key
+            price = value.second
+        }
+    }
+    if (str == "") return null
+    return str
+}
 
 /**
  * Средняя (3 балла)
