@@ -285,6 +285,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     if (chars.isEmpty() && word == "") return true
     if (chars.isEmpty()) return false
     for (i in chars) {
+        if (word == i.toString()) return true
         if (word.contains(i)) count++
     }
     if (count == chars.size) return true
@@ -304,14 +305,21 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean {
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
-    val res = mutableMapOf<String, Int>()
-    var count = 1
+    val resDo = mutableMapOf<String, List<Int>>()
     for (i in list) {
-        if (res.containsKey(i)) {
-            count++
-            res[i] = count
+        if (resDo.containsKey(i)) {
+            val listCount = resDo[i]
+            if (listCount != null) {
+                val count = listOf(1)
+                resDo[i] = count + listCount
+                continue
+            }
         }
-        res[i] = count
+        resDo[i] = listOf(1)
+    }
+    val res = mutableMapOf<String, Int>()
+    for ((key, value) in resDo) {
+        res[key] = value.sum()
     }
     val del = mutableListOf<String>()
     for ((key, value) in res) {
