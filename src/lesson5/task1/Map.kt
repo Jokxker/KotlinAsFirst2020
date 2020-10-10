@@ -339,7 +339,21 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    var count = 0
+    for (element in words) {
+        for (i in 0 until words.size - 1) {
+            if (element == words[i]) continue
+            if (element.length == words[i].length) {
+                for (it in element) {
+                    if (words[i].contains(it)) count++
+                }
+                if (count == element.length) return true
+            }
+        }
+    }
+    return false
+}
 
 /**
  * Сложная (5 баллов)
