@@ -341,9 +341,13 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  */
 fun hasAnagrams(words: List<String>): Boolean {
     var count = 0
+    var countSame = 0
     for (element in words) {
-        for (i in 0 until words.size - 1) {
-            if (element == words[i]) continue
+        for (i in words.indices) {
+            if (element == words[i]) {
+                countSame++
+                continue
+            }
             if (element.length == words[i].length) {
                 for (it in element) {
                     if (words[i].contains(it)) count++
@@ -352,6 +356,7 @@ fun hasAnagrams(words: List<String>): Boolean {
             }
         }
     }
+    if (countSame > words.size) return true
     return false
 }
 
