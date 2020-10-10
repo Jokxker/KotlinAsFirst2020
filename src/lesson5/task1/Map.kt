@@ -282,8 +282,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
 fun canBuildFrom(chars: List<Char>, word: String): Boolean {
     var count = 0
     for (i in word.indices) {
-        if (chars.contains(word[i].toLowerCase())) count++
-        if (chars.contains(word[i].toUpperCase())) count++
+        if (chars.contains(word[i].toLowerCase()) || chars.contains(word[i].toUpperCase())) count++
     }
     if (count == word.length) return true
     return false

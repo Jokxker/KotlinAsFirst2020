@@ -285,6 +285,7 @@ class Tests {
         assertTrue(canBuildFrom(listOf('a'), ""))
         assertTrue(canBuildFrom(listOf('a', 'w'), "a"))
         assertTrue(canBuildFrom(listOf('A'), "a"))
+        assertTrue(canBuildFrom(listOf('0'), "0"))
     }
 
     @Test
