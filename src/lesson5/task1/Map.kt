@@ -408,8 +408,8 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
         for ((name, friend) in res) {
             if (name == k) continue
             if (v.contains(name)) {
+                if (friend.isEmpty()) continue
                 res[k] = (friend - k) + v
-                break
             }
         }
     }
