@@ -409,6 +409,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
             if (name == k) continue
             if (v.contains(name)) {
                 res[k] = (friend - k) + v
+                break
             }
         }
     }
@@ -462,4 +463,17 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val resMap = mutableMapOf<String, Pair<Int, Int>>()
+    val res = mutableSetOf<String>()
+    for ((k, v) in treasures) {
+        if (v.first < capacity) resMap[k] = v
+    }
+    if (resMap.size == 1) {
+        for ((key) in resMap) {
+            res.add(key)
+        }
+        return res
+    }
+    return res
+}
