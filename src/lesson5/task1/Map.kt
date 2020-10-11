@@ -467,7 +467,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     val resMap = mutableMapOf<String, Pair<Int, Int>>()
     val res = mutableSetOf<String>()
     for ((k, v) in treasures) {
-        if (v.first < capacity) resMap[k] = v
+        if (v.first <= capacity) resMap[k] = v
     }
     if (resMap.size == 1) {
         for ((key) in resMap) {
