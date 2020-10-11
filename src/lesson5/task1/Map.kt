@@ -404,8 +404,8 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
             }
         }
     }
-    for ((k,v) in friends) {
-        for ((name, friend) in friends) {
+    for ((k, v) in friends) {
+        for ((name, friend) in res) {
             if (name == k) continue
             if (v.contains(name)) {
                 res[k] = (friend - k) + v
@@ -432,7 +432,14 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    for (i in 0 until list.size - 1) {
+        for (it in i + 1 until list.size) {
+            if (list[i] + list[it] == number) return i to it
+        }
+    }
+    return -1 to -1
+}
 
 /**
  * Очень сложная (8 баллов)
