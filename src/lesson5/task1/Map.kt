@@ -194,10 +194,9 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
-    val resDo = mutableMapOf<String, MutableList<Double>>()
-    stockPrices.forEach { resDo.getOrPut(it.first) { mutableListOf() }.add(it.second) }
     val res = mutableMapOf<String, Double>()
-    resDo.forEach { res.getOrPut(it.key) { it.value.sum() / it.value.size } }
+    stockPrices.groupBy { it.first }
+        .forEach { res.getOrPut(it.key) { it.value.sumByDouble { pair -> pair.second } / it.value.size } }
     return res
 }
 
@@ -216,22 +215,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    var str = ""
-    var price = Double.MAX_VALUE
-    val check = mutableListOf<String>()
-    for ((_, value) in stuff) {
-        check.add(value.first)
-    }
-    if (!check.contains(kind)) return null
-    for ((key, value) in stuff) {
-        if (value.first == kind && value.second <= price) {
-            str = key
-            price = value.second
-        }
-    }
-    return str
-}
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
 
 /**
  * Средняя (3 балла)
@@ -351,27 +335,7 @@ fun hasAnagrams(words: List<String>): Boolean {
  *          "GoodGnome" to setOf()
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
-    val res = mutableMapOf<String, Set<String>>()
-    for ((k, v) in friends) {
-        res[k] = v
-        for (element in v) {
-            if (!friends.containsKey(element)) {
-                res[element] = setOf()
-            }
-        }
-    }
-    for ((k, v) in friends) {
-        for ((name, friend) in res) {
-            if (name == k) continue
-            if (v.contains(name)) {
-                if (friend.isEmpty()) continue
-                res[k] = (friend - k) + v
-            }
-        }
-    }
-    return res
-}
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
 
 /**
  * Сложная (6 баллов)
@@ -391,14 +355,12 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    var first = 0
-    var last = list.size - 1
-    while (first < last) {
-        if (list[first] + list[last] == number) return first to last
-        if (list[first] + list[last] > number) {
-            last--
+    val numMap = mutableMapOf<Int, Int>()
+    for (i in list.indices) {
+        if (numMap.contains(number - list[i])) {
+            return numMap[number - list[i]]!! to i
         } else {
-            first++
+            numMap[list[i]] = i
         }
     }
     return -1 to -1
@@ -425,17 +387,4 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val resMap = mutableMapOf<String, Pair<Int, Int>>()
-    val res = mutableSetOf<String>()
-    for ((k, v) in treasures) {
-        if (v.first <= capacity) resMap[k] = v
-    }
-    if (resMap.size == 1) {
-        for ((key) in resMap) {
-            res.add(key)
-        }
-        return res
-    }
-    return res
-}
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()

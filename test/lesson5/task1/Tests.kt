@@ -246,17 +246,17 @@ class Tests {
     @Test
     @Tag("4")
     fun findCheapestStuff() {
-        assertNull(
-            findCheapestStuff(
-                mapOf("Мария" to ("печенье" to 20.0), "Орео" to ("печенье" to 100.0)),
-                "торт"
-            )
-        )
         assertEquals(
             "Мария",
             findCheapestStuff(
                 mapOf("Мария" to ("печенье" to 20.0), "Орео" to ("печенье" to 100.0)),
                 "печенье"
+            )
+        )
+        assertNull(
+            findCheapestStuff(
+                mapOf("Мария" to ("печенье" to 20.0), "Орео" to ("печенье" to 100.0)),
+                "торт"
             )
         )
         assertEquals(
@@ -420,7 +420,7 @@ class Tests {
         )
         assertEquals(
             Pair(0, 2),
-            findSumOfTwo(listOf(1, 2, 3), 4)
+            findSumOfTwo(listOf(2, 3, 2), 4)
         )
         assertEquals(
             Pair(-1, -1),
