@@ -215,7 +215,15 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    val res = mutableListOf<Pair<String, Double>>()
+    stuff.forEach { if (it.value.first == kind) res.add(it.key to it.value.second) }
+    val rs1 = res.groupBy({ it.second }, { it.first })
+    val minil = mutableListOf<Double>()
+    rs1.forEach { minil.add(it.key) }
+    //if (rs1[minil.min()]?.first() != null) return rs1[minil.min()]?.first()
+    return null
+}
 
 /**
  * Средняя (3 балла)
@@ -387,4 +395,10 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val res = mutableSetOf<String>()
+    val suit = mutableMapOf<String, Pair<Int, Int>>()
+    treasures.forEach { if (it.value.first <= capacity) suit.getOrPut(it.key) { it.value } }
+    suit.forEach { res.add(it.key) }
+    return res
+}
