@@ -221,7 +221,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     val rs1 = res.groupBy({ it.second }, { it.first })
     val minil = mutableListOf<Double>()
     rs1.forEach { minil.add(it.key) }
-    //if (rs1[minil.min()]?.first() != null) return rs1[minil.min()]?.first()
+    if (rs1[minil.min()]?.first() != null) return rs1[minil.min()]?.first()
     return null
 }
 
