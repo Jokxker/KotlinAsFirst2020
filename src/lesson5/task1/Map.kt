@@ -97,9 +97,9 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
-    val res = mutableMapOf<Int, MutableList<String>>()
-    grades.forEach { res.getOrPut(it.value) { mutableListOf() }.add(it.key) }
-    return res
+    val list = mutableListOf<Pair<Int, String>>()
+    grades.forEach { list.add(it.value to it.key) }
+    return list.groupBy({ it.first }, { it.second })
 }
 
 /**
@@ -216,13 +216,12 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    val res = mutableListOf<Pair<String, Double>>()
-    stuff.forEach { if (it.value.first == kind) res.add(it.key to it.value.second) }
-    val rs1 = res.groupBy({ it.second }, { it.first })
-    val minil = mutableListOf<Double>()
-    rs1.forEach { minil.add(it.key) }
-    if (rs1[minil.min()]?.first() != null) return rs1[minil.min()]?.first()
-    return null
+    val list = mutableListOf<Pair<String, Double>>()
+    stuff.forEach { if (it.value.first == kind) list.add(it.key to it.value.second) }
+    val res = list.groupBy({ it.second }, { it.first })
+    val minPrice = mutableListOf<Double>()
+    res.forEach { minPrice.add(it.key) }
+    return res[minPrice.minOrNull()]?.first()
 }
 
 /**
