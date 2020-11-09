@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import java.lang.Integer.max
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -395,9 +397,43 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val res = mutableSetOf<String>()
-    val suit = mutableMapOf<String, Pair<Int, Int>>()
-    treasures.forEach { if (it.value.first <= capacity) suit.getOrPut(it.key) { it.value } }
-    suit.forEach { res.add(it.key) }
-    return res
+    val name = arrayListOf("0")
+    treasures.forEach { name.add(it.key) }
+    val price = arrayListOf(0 to 0)
+    treasures.forEach { price.add(it.value) }
+    val arr = Array(name.size) { IntArray(capacity + 1) }
+    for (i in 0..capacity) {
+        arr[0][i] == 0
+    }
+    for (i in 0..name.size) {
+        arr[i][0] = 0
+    }
+    for (i in 1 until price.size) {
+        for (j in 1..capacity) {
+            if (price[i].first <= price[j].first) {
+                arr[i][j] = max(arr[i - 1][j], price[i].second + arr[i - 1][j - price[i].first])
+            } else {
+                arr[i][j] = arr[i - 1][j]
+            }
+        }
+    }
+    val res = mutableSetOf<Int>()
+    for (i in arr.size - 1 downTo 1) {
+        for (j in arr[i].size - 1 downTo 1) {
+            if (arr[i][j] != arr[i - 1][j]) {
+                res.add(i)
+            }
+        }
+    }
+    fun ans(k: Int, s: Int) {
+        if (arr[k][s] == 0)
+            return
+        if (arr[k - 1][s] == arr[k][s])
+            ans(k - 1, s)
+        else
+            ans(k - 1, s - price[k].first)
+        ans.push
+    }
+    print(res)
+    return emptySet()
 }
