@@ -104,7 +104,7 @@ fun dateStrToDigit(str: String): String {
     }
     val dayInMonth = daysInMonth(res[1], res[2])
     if (res[0] > dayInMonth) return ""
-    return String.format("%02d.%02d.%04d", res[0], res[1], res[2])
+    return String.format("%02d.%02d.%d", res[0], res[1], res[2])
 }
 
 /**
