@@ -3,7 +3,6 @@
 package lesson3.task1
 
 import kotlin.math.abs
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
