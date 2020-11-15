@@ -121,7 +121,7 @@ fun dateDigitToStr(digital: String): String {
     if (!digital.contains(".")) return ""
     val listDigital = digital.split(".")
     if (listDigital.size > 3) return ""
-    var dayInMonth: Int
+    val dayInMonth: Int
     try {
         if (listDigital[1].toInt() in 1..12) {
             dayInMonth = daysInMonth(listDigital[1].toInt(), listDigital[2].toInt())
