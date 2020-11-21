@@ -321,16 +321,20 @@ fun fromRoman(roman: String): Int {
     roman.forEach { romSplit.add(it.toString()) }
     val num = mutableListOf<Int>()
     var n = romSplit.lastIndex
-    while (n > 0) {
-        if (romanMap.getValue(romSplit[n - 1]) < romanMap.getValue(romSplit[n])) {
-            num.add(romanMap.getValue(romSplit[n]) - romanMap.getValue(romSplit[n - 1]))
-            n -= 2
-            continue
+    try {
+        while (n > 0) {
+            if (romanMap.getValue(romSplit[n - 1]) < romanMap.getValue(romSplit[n])) {
+                num.add(romanMap.getValue(romSplit[n]) - romanMap.getValue(romSplit[n - 1]))
+                n -= 2
+                continue
+            }
+            num.add(romanMap.getValue(romSplit[n]))
+            n--
         }
-        num.add(romanMap.getValue(romSplit[n]))
-        n--
+        if (n == 0) num.add(romanMap.getValue(romSplit[n]))
+    } catch (e: NoSuchElementException) {
+        return -1
     }
-    if (n == 0) num.add(romanMap.getValue(romSplit[n]))
     return num.sum()
 }
 
