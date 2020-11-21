@@ -312,7 +312,7 @@ fun mostExpensive(description: String): String {
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int {
-    if (roman.contains(Regex("[^IVXLCDM]"))) return -1
+    if (!roman.contains(Regex("[IVXLCDM]"))) return -1
     val romanMap = mapOf(
         "I" to 1, "V" to 5, "X" to 10,
         "L" to 50, "C" to 100, "D" to 500, "M" to 1000
@@ -321,16 +321,20 @@ fun fromRoman(roman: String): Int {
     roman.forEach { romSplit.add(it.toString()) }
     val num = mutableListOf<Int>()
     var n = romSplit.lastIndex
-    while (n > 0) {
-        if (romanMap.getValue(romSplit[n - 1]) < romanMap.getValue(romSplit[n])) {
-            num.add(romanMap.getValue(romSplit[n]) - romanMap.getValue(romSplit[n - 1]))
-            n -= 2
-            continue
+    try {
+        while (n > 0) {
+            if (romanMap.getValue(romSplit[n - 1]) < romanMap.getValue(romSplit[n])) {
+                num.add(romanMap.getValue(romSplit[n]) - romanMap.getValue(romSplit[n - 1]))
+                n -= 2
+                continue
+            }
+            num.add(romanMap.getValue(romSplit[n]))
+            n--
         }
-        num.add(romanMap.getValue(romSplit[n]))
-        n--
+        if (n == 0) num.add(romanMap.getValue(romSplit[n]))
+    } catch (e: NoSuchElementException) {
+        return -1
     }
-    if (n == 0) num.add(romanMap.getValue(romSplit[n]))
     return num.sum()
 }
 
