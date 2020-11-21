@@ -203,9 +203,19 @@ fun bestLongJump(jumps: String): Int {
  * вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
+    if (!jumps.contains("+") || !jumps.contains(Regex("""\d"""))) return -1
     val jumpsRes = jumps.split(" ")
-    print(jumpsRes)
-    return 1
+    val res = mutableListOf<Int>()
+    for (i in jumpsRes.indices) {
+        if (jumpsRes[i].contains("+")) {
+            try {
+                res.add(jumpsRes[i - 1].toInt())
+            } catch (e: NumberFormatException) {
+                return -1
+            }
+        }
+    }
+    return res.maxOrNull()!!
 }
 
 /**
