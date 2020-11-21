@@ -3,7 +3,6 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
-import java.lang.IllegalArgumentException
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -312,7 +311,31 @@ fun mostExpensive(description: String): String {
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+    val romanMap = mapOf(
+        "I" to 1, "V" to 5, "X" to 10,
+        "L" to 50, "C" to 100, "D" to 500, "M" to 1000
+    )
+    val romSplit = mutableListOf<String>()
+    roman.forEach { romSplit.add(it.toString()) }
+    val num = mutableListOf<Int>()
+    var n = romSplit.lastIndex
+    try {
+        while (n > 0) {
+            if (romanMap.getValue(romSplit[n - 1]) < romanMap.getValue(romSplit[n])) {
+                num.add(romanMap.getValue(romSplit[n]) - romanMap.getValue(romSplit[n - 1]))
+                n -= 2
+                continue
+            }
+            num.add(romanMap.getValue(romSplit[n]))
+            n--
+        }
+        if (n == 0) num.add(romanMap.getValue(romSplit[n]))
+    } catch (e: NoSuchElementException) {
+        return -1
+    }
+    return num.sum()
+}
 
 /**
  * Очень сложная (7 баллов)
