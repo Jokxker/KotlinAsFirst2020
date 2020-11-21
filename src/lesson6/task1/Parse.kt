@@ -202,7 +202,11 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val jumpsRes = jumps.split(" ")
+    print(jumpsRes)
+    return 1
+}
 
 /**
  * Сложная (6 баллов)
