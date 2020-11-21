@@ -235,7 +235,7 @@ fun plusMinus(expression: String): Int {
     val expRes = expression.split(" ")
     var num: Int
     num = try {
-        if (expression.contains(Regex("""((\d)\s\+)"""))) {
+        if (expression.contains(Regex("""^((\d)\s\+)"""))) {
             expRes[0].toInt() + expRes[2].toInt()
         } else {
             expRes[0].toInt() - expRes[2].toInt()
