@@ -374,4 +374,68 @@ fun fromRoman(roman: String): Int {
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    if (commands.contains(Regex("""\+-"""))) {
+        throw IllegalArgumentException("IllegalArgumentException")
+    }
+    val case = IntArray(cells).toMutableList()
+    var commandsIs = commands
+    var index1 = cells / 2
+    var index2 = 0
+    var index3 = 0
+    while (index3 != limit) {
+        if (index2 == -1) {
+            index2++
+            index3--
+        }
+        index3++
+        var n: Char
+        try {
+            n = commandsIs[index2]
+            if (n == ']' && case[index1] != 0) {
+                if (commandsIs.indexOf(']') != index2) {
+                    commandsIs = commandsIs.drop(index2)
+                    index2 = -1
+                    continue
+                }
+                index2 = commandsIs.indexOf('[')
+            }
+            if (n == '[' && case[index1] == 0) {
+                if (commandsIs.indexOf('[') != index2) {
+                    commandsIs = commandsIs.drop(index2)
+                    index2 = -1
+                    continue
+                }
+                val commandsThe = commandsIs.drop(commandsIs.indexOf('['))
+                print(commandsThe)
+                if (commandsThe.contains(Regex("""\[.*\["""))) index2 = commandsIs.lastIndexOf(']')
+                index2 = commandsIs.indexOf(']')
+            }
+            index2++
+        } catch (e: IndexOutOfBoundsException) {
+            break
+        }
+        try {
+            if (n == '+') {
+                case[index1] += 1
+                continue
+            }
+            if (n == '-') {
+                case[index1] -= 1
+                continue
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            throw IllegalArgumentException("IllegalArgumentException")
+        }
+        if (n == '>') {
+            index1++
+            continue
+        }
+        if (n == '<') {
+            index1--
+            continue
+        }
+    }
+    print(case.joinToString())
+    return case
+}
