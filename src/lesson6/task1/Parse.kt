@@ -375,67 +375,59 @@ fun fromRoman(roman: String): Int {
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
-    if (commands.contains(Regex("""\+-"""))) {
+    if (!commands.contains(Regex("""[+\-<>\[\]]"""))) {
         throw IllegalArgumentException("IllegalArgumentException")
     }
+    var one = 0
+    for (element in commands) {
+        if (element == '[') one++
+        if (element == ']') one++
+    }
+    if (one % 2 != 0) throw IllegalArgumentException("IllegalArgumentException")
     val case = IntArray(cells).toMutableList()
-    var commandsIs = commands
     var index1 = cells / 2
     var index2 = 0
-    var index3 = 0
-    while (index3 != limit) {
-        if (index2 == -1) {
-            index2++
-            index3--
-        }
-        index3++
-        var n: Char
+    var c: Char
+    for (i in 1..limit) {
+        if (index1 > cells) throw IllegalStateException("IllegalStateException")
         try {
-            n = commandsIs[index2]
-            if (n == ']' && case[index1] != 0) {
-                if (commandsIs.indexOf(']') != index2) {
-                    commandsIs = commandsIs.drop(index2)
-                    index2 = -1
-                    continue
+            c = commands[index2]
+            if (c == '[' && case[index1] == 0) {
+                var needIndex = 0
+                var flag = true
+                for (j in index2 + 1 until commands.length) {
+                    if (commands[j] == ']' && flag) {
+                        needIndex = j
+                        break
+                    }
+                    if (commands[j] == '[') flag = false
+                    if (commands[j] == ']') flag = true
                 }
-                index2 = commandsIs.indexOf('[')
+                index2 = needIndex
             }
-            if (n == '[' && case[index1] == 0) {
-                if (commandsIs.indexOf('[') != index2) {
-                    commandsIs = commandsIs.drop(index2)
-                    index2 = -1
-                    continue
+            if (c == ']' && case[index1] != 0) {
+                var needIndex = 0
+                var flag = true
+                for (j in index2 - 1 downTo 0) {
+                    if (commands[j] == '[' && flag) {
+                        needIndex = j
+                        break
+                    }
+                    if (commands[j] == ']') flag = false
+                    if (commands[j] == '[') flag = true
                 }
-                val commandsThe = commandsIs.drop(commandsIs.indexOf('['))
-                print(commandsThe)
-                if (commandsThe.contains(Regex("""\[.*\["""))) index2 = commandsIs.lastIndexOf(']')
-                index2 = commandsIs.indexOf(']')
+                index2 = needIndex
             }
             index2++
         } catch (e: IndexOutOfBoundsException) {
             break
         }
-        try {
-            if (n == '+') {
-                case[index1] += 1
-                continue
-            }
-            if (n == '-') {
-                case[index1] -= 1
-                continue
-            }
-        } catch (e: IndexOutOfBoundsException) {
-            throw IllegalArgumentException("IllegalArgumentException")
-        }
-        if (n == '>') {
-            index1++
-            continue
-        }
-        if (n == '<') {
-            index1--
-            continue
+        when {
+            (c == '+') -> case[index1] += 1
+            (c == '-') -> case[index1] -= 1
+            (c == '>') -> index1++
+            (c == '<') -> index1--
         }
     }
-    print(case.joinToString())
     return case
 }
