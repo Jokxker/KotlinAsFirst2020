@@ -135,6 +135,7 @@ class Tests {
     @Test
     @Tag("7")
     fun computeDeviceCells() {
+        assertEquals(listOf(0), computeDeviceCells(1, "", 500))
         assertThrows(IllegalArgumentException::class.java) { computeDeviceCells(10, "+>+>[+>", 3) }
         assertThrows(IllegalStateException::class.java) { computeDeviceCells(20, ">>>>>>>>>>>>>", 12) }
         assertThrows(IllegalArgumentException::class.java) { computeDeviceCells(10, "===", 3) }
