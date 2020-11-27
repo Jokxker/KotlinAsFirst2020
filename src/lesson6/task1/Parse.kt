@@ -428,7 +428,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
             (c == '>') -> iCase++
             (c == '<') -> iCase--
         }
-        if (iCase > cells || iCase < 0) throw IllegalStateException("IllegalStateException")
+        if (iCase >= cells || iCase < 0) throw IllegalStateException("IllegalStateException")
     }
     return case
 }
