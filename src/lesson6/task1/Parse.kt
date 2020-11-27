@@ -390,8 +390,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     var index1 = cells / 2
     var index2 = 0
     var c: Char
-    for (i in 0..limit - 1) {
-        if (index1 > cells) throw IllegalStateException("IllegalStateException")
+    for (i in 0 until limit) {
         try {
             c = commands[index2]
             if (c == '[' && case[index1] == 0) {
@@ -430,6 +429,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
             (c == '>') -> index1++
             (c == '<') -> index1--
         }
+        if (index1 > cells || index1 < 0) throw IllegalStateException("IllegalStateException")
     }
     return case
 }
