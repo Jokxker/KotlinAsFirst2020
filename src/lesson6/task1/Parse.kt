@@ -376,13 +376,12 @@ fun fromRoman(roman: String): Int {
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     when {
-        (commands == "") -> return listOf(0)
+        (commands == "") -> return IntArray(cells).toList()
         (!commands.contains(Regex("""\+\s|-\s|<\s|>\s|]\s|\[\s|\+|-|<|>|]|\["""))) ->
             throw IllegalArgumentException("IllegalArgumentException")
     }
-    var brac = 0
-    commands.forEach { if (it == '[' || it == ']') brac++ }
-    if (brac % 2 != 0) throw IllegalArgumentException("IllegalArgumentException")
+    val brace = commands.filter { it == '[' || it == ']' }
+    if (brace.length % 2 != 0) throw IllegalArgumentException("IllegalArgumentException")
 
     fun needIndex(c: Char, i: Int): Int {
         var res = 0
