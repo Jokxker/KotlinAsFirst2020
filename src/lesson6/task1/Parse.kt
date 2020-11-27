@@ -375,14 +375,6 @@ fun fromRoman(roman: String): Int {
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
-    when {
-        (commands == "") -> return IntArray(cells).toList()
-        (!commands.contains(Regex("""\+\s|-\s|<\s|>\s|]\s|\[\s|\+|-|<|>|]|\["""))) ->
-            throw IllegalArgumentException("IllegalArgumentException")
-    }
-    if (commands.count { it == '[' } - commands.count { it == ']' } != 0)
-        throw IllegalArgumentException("IllegalArgumentException")
-
     fun needIndex(c: Char, i: Int): Int {
         var res = 0
         var n = 0
@@ -409,6 +401,23 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
         return res
     }
 
+    when {
+        (commands == "") -> return IntArray(cells).toList()
+        (!commands.contains(Regex("""\+\s|-\s|<\s|>\s|]\s|\[\s|\+|-|<|>|]|\["""))) ->
+            throw IllegalArgumentException("IllegalArgumentException")
+        (commands.contains('[') || commands.contains(']')) ->
+            when {
+                commands.indexOf('[') > commands.indexOf(']') -> {
+                    throw IllegalArgumentException("")
+                }
+                commands.lastIndexOf('[') > commands.lastIndexOf(']') -> {
+                    throw IllegalArgumentException("")
+                }
+                commands.count { it == '[' } - commands.count { it == ']' } != 0 -> {
+                    throw IllegalArgumentException("")
+                }
+            }
+    }
     val case = IntArray(cells).toMutableList()
     var iCase = cells / 2
     var iCom = 0

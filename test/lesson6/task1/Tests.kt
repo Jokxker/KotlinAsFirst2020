@@ -135,6 +135,14 @@ class Tests {
     @Test
     @Tag("7")
     fun computeDeviceCells() {
+        assertEquals(listOf(1, 1, 1, 0, 0, -1, 0, 0, 0, 0), computeDeviceCells(10, "- <<<<< +[>+]", 17))
+        assertThrows(IllegalArgumentException::class.java) {
+            computeDeviceCells(
+                1,
+                "[++++++++++++[[+++++++++++++++++-+]+++--]-+---+-+<--+> -+]][<+-+",
+                501
+            )
+        }
         assertThrows(IllegalStateException::class.java) { computeDeviceCells(1, ">", 500) }
         assertEquals(listOf(0), computeDeviceCells(1, "[[[[+]]++]]", 500))
         assertThrows(IllegalArgumentException::class.java) { computeDeviceCells(0, "1 ", 0) }
@@ -153,7 +161,6 @@ class Tests {
             computeDeviceCells(11, "<<<<< + >>>>>>>>>> --[<-] >+[>+] >++[--< <[<] >+[>+] >++]", 10000)
         )
         assertEquals(listOf(0, 0, -1, -1, -1, 0, 0, 0, 0, 0), computeDeviceCells(10, "<-<-<-<-<-", 6))
-        assertEquals(listOf(1, 1, 1, 0, 0, -1, 0, 0, 0, 0), computeDeviceCells(10, "- <<<<< +[>+]", 17))
         assertEquals(listOf(0, 0, 0, 0, 0, 1, 1, 1, 1, 1), computeDeviceCells(10, "+>+>+>+>+", 10000))
         assertEquals(listOf(-1, -1, -1, -1, -1, 0, 0, 0, 0, 0), computeDeviceCells(10, "<-<-<-<-<-", 10000))
         assertEquals(listOf(1, 1, 1, 1, 1, 0, 0, 0, 0, 0), computeDeviceCells(10, "- <<<<< +[>+]", 10000))
