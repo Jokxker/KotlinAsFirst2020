@@ -383,50 +383,52 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     var brac = 0
     commands.forEach { if (it == '[' || it == ']') brac++ }
     if (brac % 2 != 0) throw IllegalArgumentException("IllegalArgumentException")
+
+    fun needIndex(c: Char, i: Int): Int {
+        var res = 0
+        var n = 0
+        if (c == '[') {
+            for (j in i + 1 until commands.length) {
+                if (commands[j] == ']' && n == 0) {
+                    res = j
+                    break
+                }
+                if (commands[j] == '[') n--
+                if (commands[j] == ']') n++
+            }
+        }
+        if (c == ']') {
+            for (j in i - 1 downTo 0) {
+                if (commands[j] == '[' && n == 0) {
+                    res = j
+                    break
+                }
+                if (commands[j] == ']') n--
+                if (commands[j] == '[') n++
+            }
+        }
+        return res
+    }
+
     val case = IntArray(cells).toMutableList()
-    var index1 = cells / 2
-    var index2 = 0
+    var iCase = cells / 2
+    var iCom = 0
     var c: Char
     for (i in 0 until limit) {
-        try {
-            c = commands[index2]
-            if (c == '[' && case[index1] == 0) {
-                var needIndex = 0
-                var n = 0
-                for (j in index2 + 1 until commands.length) {
-                    if (commands[j] == ']' && n == 0) {
-                        needIndex = j
-                        break
-                    }
-                    if (commands[j] == '[') n--
-                    if (commands[j] == ']') n++
-                }
-                index2 = needIndex
-            }
-            if (c == ']' && case[index1] != 0) {
-                var needIndex = 0
-                var n = 0
-                for (j in index2 - 1 downTo 0) {
-                    if (commands[j] == '[' && n == 0) {
-                        needIndex = j
-                        break
-                    }
-                    if (commands[j] == ']') n--
-                    if (commands[j] == '[') n++
-                }
-                index2 = needIndex
-            }
-            index2++
-        } catch (e: IndexOutOfBoundsException) {
-            break
-        }
+        if (iCom > commands.length - 1 || iCom < 0) break
+        c = commands[iCom]
         when {
-            (c == '+') -> case[index1] += 1
-            (c == '-') -> case[index1] -= 1
-            (c == '>') -> index1++
-            (c == '<') -> index1--
+            (c == '[' && case[iCase] == 0) -> iCom = needIndex(c, iCom)
+            (c == ']' && case[iCase] != 0) -> iCom = needIndex(c, iCom)
         }
-        if (index1 > cells || index1 < 0) throw IllegalStateException("IllegalStateException")
+        iCom++
+        when {
+            (c == '+') -> case[iCase] += 1
+            (c == '-') -> case[iCase] -= 1
+            (c == '>') -> iCase++
+            (c == '<') -> iCase--
+        }
+        if (iCase > cells || iCase < 0) throw IllegalStateException("IllegalStateException")
     }
     return case
 }
