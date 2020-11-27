@@ -408,17 +408,17 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
         (commands.contains('[') || commands.contains(']')) ->
             when {
                 commands.indexOf('[') > commands.indexOf(']') -> {
-                    throw IllegalArgumentException("")
+                    throw IllegalArgumentException("IllegalArgumentException")
                 }
                 commands.lastIndexOf('[') > commands.lastIndexOf(']') -> {
-                    throw IllegalArgumentException("")
+                    throw IllegalArgumentException("IllegalArgumentException")
                 }
                 commands.count { it == '[' } - commands.count { it == ']' } != 0 -> {
-                    throw IllegalArgumentException("")
+                    throw IllegalArgumentException("IllegalArgumentException")
                 }
             }
     }
-    val case = IntArray(cells).toMutableList()
+    val case = IntArray(cells)
     var iCase = cells / 2
     var iCom = 0
     var c: Char
@@ -438,5 +438,5 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
         }
         if (iCase >= cells || iCase < 0) throw IllegalStateException("IllegalStateException")
     }
-    return case
+    return case.toList()
 }
