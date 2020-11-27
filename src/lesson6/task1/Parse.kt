@@ -377,15 +377,12 @@ fun fromRoman(roman: String): Int {
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     when {
         (commands == "") -> return listOf(0)
-        (!commands.contains(Regex("""[+\-<>\[\]\s]"""))) ->
+        (!commands.contains(Regex("""\+\s|-\s|<\s|>\s|]\s|\[\s|\+|-|<|>|]|\["""))) ->
             throw IllegalArgumentException("IllegalArgumentException")
     }
-    var one = 0
-    for (element in commands) {
-        if (element == '[') one++
-        if (element == ']') one++
-    }
-    if (one % 2 != 0) throw IllegalArgumentException("IllegalArgumentException")
+    var brac = 0
+    commands.forEach { if (it == '[' || it == ']') brac++ }
+    if (brac % 2 != 0) throw IllegalArgumentException("IllegalArgumentException")
     val case = IntArray(cells).toMutableList()
     var index1 = cells / 2
     var index2 = 0
@@ -395,27 +392,27 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
             c = commands[index2]
             if (c == '[' && case[index1] == 0) {
                 var needIndex = 0
-                var flag = true
+                var n = 0
                 for (j in index2 + 1 until commands.length) {
-                    if (commands[j] == ']' && flag) {
+                    if (commands[j] == ']' && n == 0) {
                         needIndex = j
                         break
                     }
-                    if (commands[j] == '[') flag = false
-                    if (commands[j] == ']') flag = true
+                    if (commands[j] == '[') n--
+                    if (commands[j] == ']') n++
                 }
                 index2 = needIndex
             }
             if (c == ']' && case[index1] != 0) {
                 var needIndex = 0
-                var flag = true
+                var n = 0
                 for (j in index2 - 1 downTo 0) {
-                    if (commands[j] == '[' && flag) {
+                    if (commands[j] == '[' && n == 0) {
                         needIndex = j
                         break
                     }
-                    if (commands[j] == ']') flag = false
-                    if (commands[j] == '[') flag = true
+                    if (commands[j] == ']') n--
+                    if (commands[j] == '[') n++
                 }
                 index2 = needIndex
             }
