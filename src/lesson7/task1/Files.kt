@@ -70,7 +70,16 @@ fun deleteMarked(inputName: String, outputName: String) {
             writer.newLine()
             continue
         }
-        if (line.contains(Regex("""^[^_]"""))) writer.write(line)
+        if (line.contains(Regex("""^[^_]"""))) {
+            if (line.contains('\n')) {
+                writer.write(line.substringBefore('\n'))
+                print(line.substringBefore('\n'))
+                writer.newLine()
+                writer.write(line.substring(line.indexOf('\n')))
+                continue
+            }
+            writer.write(line)
+        }
     }
     writer.close()
 }
