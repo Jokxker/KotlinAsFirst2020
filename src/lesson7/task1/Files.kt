@@ -68,14 +68,19 @@ fun deleteMarked(inputName: String, outputName: String) {
         if (line.isEmpty()) {
             writer.newLine()
             writer.newLine()
-            continue
         }
-        if (line.contains(Regex("""^[^_]"""))) {
-            if (line.contains('\n')) {
-                writer.write(line.substringBefore('\n'))
-                print(line.substringBefore('\n'))
-                writer.newLine()
-                writer.write(line.substring(line.indexOf('\n')))
+        if (!line.contains(Regex("""^[_]"""))) {
+            if (line.contains(Regex("""\\n"""))) {
+                var i = 0
+                while (i < line.length) {
+                    if (line[i] == '\\' && line[i + 1] == 'n') {
+                        writer.newLine()
+                        i += 2
+                        continue
+                    }
+                    writer.write(line[i].toString())
+                    i++
+                }
                 continue
             }
             writer.write(line)
