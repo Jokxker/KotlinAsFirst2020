@@ -402,7 +402,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     }
 
     when {
-        (commands == "") -> return IntArray(cells).toList()
+        (commands == "" || commands == " ") -> return IntArray(cells).toList()
         (!commands.contains(Regex("""\+\s|-\s|<\s|>\s|]\s|\[\s|\+|-|<|>|]|\["""))) ->
             throw IllegalArgumentException("IllegalArgumentException")
         (commands.contains('[') || commands.contains(']')) ->
