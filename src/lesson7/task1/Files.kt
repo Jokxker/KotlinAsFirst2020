@@ -120,7 +120,31 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val write = File(outputName).bufferedWriter()
+    val regul = mapOf(
+        "жы" to "жи", "чя" to "ча", "чю" to "чу",
+        "Жы" to "Жи", "Чя" to "Ча", "Чю" to "Чу",
+        "жЫ" to "жИ", "чЯ" to "чА", "чЮ" to "чУ",
+        "ЖЫ" to "ЖИ", "ЧЯ" to "ЧА", "ЧЮ" to "ЧУ",
+        "шы" to "ши", "щя" to "ща", "щю" to "щу",
+        "Шы" to "Ши", "Щя" to "Ща", "Щю" to "Щу",
+        "шЫ" to "шИ", "щЯ" to "щА", "щЮ" to "щУ",
+        "ШЫ" to "ШИ", "ЩЯ" to "ЩА", "ЩЮ" to "ЩУ"
+    )
+    for (line in File(inputName).readLines()) {
+        var strRes = ""
+        for (i in 0 until line.length - 1) {
+            var str = line[i].toString() + line[i + 1].toString()
+            for ((key) in regul) {
+                if (str == key) {
+                    str = regul[key]!!
+                }
+            }
+            strRes += str
+        }
+        write.write(strRes)
+        write.newLine()
+    }
 }
 
 /**
