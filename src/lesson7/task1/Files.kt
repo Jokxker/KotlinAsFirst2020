@@ -120,31 +120,26 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    val write = File(outputName).bufferedWriter()
-    val regul = mapOf(
-        "жы" to "жи", "чя" to "ча", "чю" to "чу",
-        "Жы" to "Жи", "Чя" to "Ча", "Чю" to "Чу",
-        "жЫ" to "жИ", "чЯ" to "чА", "чЮ" to "чУ",
-        "ЖЫ" to "ЖИ", "ЧЯ" to "ЧА", "ЧЮ" to "ЧУ",
-        "шы" to "ши", "щя" to "ща", "щю" to "щу",
-        "Шы" to "Ши", "Щя" to "Ща", "Щю" to "Щу",
-        "шЫ" to "шИ", "щЯ" to "щА", "щЮ" to "щУ",
-        "ШЫ" to "ШИ", "ЩЯ" to "ЩА", "ЩЮ" to "ЩУ"
+    val writer = File(outputName).bufferedWriter()
+    val regulation = mapOf(
+        "жы" to "жи", "чя" to "ча", "чю" to "чу", "жю" to "жу", "жя" to "жа",
+        "Жы" to "Жи", "Чя" to "Ча", "Чю" to "Чу", "Жю" to "Жу", "Жя" to "Жа",
+        "жЫ" to "жИ", "чЯ" to "чА", "чЮ" to "чУ", "жЮ" to "жУ", "жЯ" to "жА",
+        "ЖЫ" to "ЖИ", "ЧЯ" to "ЧА", "ЧЮ" to "ЧУ", "ЖЮ" to "ЖУ", "ЖЯ" to "ЖА",
+        "шы" to "ши", "щя" to "ща", "щю" to "щу", "шю" to "шу", "шя" to "ша",
+        "Шы" to "Ши", "Щя" to "Ща", "Щю" to "Щу", "Шю" to "Шу", "Шя" to "Ша",
+        "шЫ" to "шИ", "щЯ" to "щА", "щЮ" to "щУ", "шЮ" to "шУ", "шЯ" to "шА",
+        "ШЫ" to "ШИ", "ЩЯ" to "ЩА", "ЩЮ" to "ЩУ", "ШЮ" to "ШУ", "ШЯ" to "ША"
     )
     for (line in File(inputName).readLines()) {
-        var strRes = ""
-        for (i in 0 until line.length - 1) {
-            var str = line[i].toString() + line[i + 1].toString()
-            for ((key) in regul) {
-                if (str == key) {
-                    str = regul[key]!!
-                }
-            }
-            strRes += str
+        var strRes = line
+        for ((key, value) in regulation) {
+            strRes = strRes.replace(key, value)
         }
-        write.write(strRes)
-        write.newLine()
+        writer.write(strRes)
+        writer.newLine()
     }
+    writer.close()
 }
 
 /**
