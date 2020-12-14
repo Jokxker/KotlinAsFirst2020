@@ -2,6 +2,7 @@
 
 package lesson7.task1
 
+import lesson3.task1.digitNumber
 import java.io.File
 
 // Урок 7: работа с файлами
@@ -496,6 +497,89 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    writer.write(" $lhv | $rhv")
+    writer.newLine()
+    val listLhv = lhv.toString().split("").filter { it != "" }.toMutableList()
+    print(listLhv)
+    val listRes = (lhv / rhv).toString().split("").filter { it != "" }
+    print(listRes)
+    var res = listLhv[0].toInt()
+    for (i in 0..listLhv.size) {
+        try {
+            if (listLhv[i].toInt() < rhv) {
+                res = res * 10 + listLhv[i + 1].toInt()
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            res = listLhv[0].toInt()
+            break
+        }
+        if (res > rhv) {
+            listLhv.removeIf { listLhv.indexOf(it) <= i }
+            break
+        }
+    }
+    val ots = res.toString().length
+    var res1: Int
+    for (i in 0..listLhv.size) {
+        res1 = res - (res % rhv)
+        writer.write("-$res1")
+        if (i == 0) {
+            for (j in 0..res.toString().length + 1) {
+                writer.write(" ")
+            }
+            val one = lhv / rhv
+            writer.write("$one")
+        }
+        writer.newLine()
+        if (i > 0) {
+            if (res1.toString().length < res.toString().length) {
+                for (k in 0 until ots) {
+                    writer.write(" ")
+                }
+                for (l in res.toString().indices) {
+                    writer.write("-")
+                }
+            }
+            if (res1.toString().length == res.toString().length) {
+                for (k in 0 until ots - 1) {
+                    writer.write(" ")
+                }
+                for (l in 0..res.toString().length) {
+                    writer.write("-")
+                }
+            }
+        } else {
+            for (l in 0..res.toString().length) {
+                writer.write("-")
+            }
+        }
+        writer.newLine()
+        try {
+            res = res % rhv * 10 + listLhv[i].toInt()
+            for (k in 0 until ots) {
+                writer.write(" ")
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            for (k in lhv.toString().indices) {
+                writer.write(" ")
+            }
+            res %= rhv
+            writer.write("$res")
+            break
+        }
+        writer.write("$res")
+        writer.newLine()
+        if (res.toString().length == (res - (res % rhv)).toString().length) {
+            for (k in 0 until ots - 1) {
+                writer.write(" ")
+            }
+        } else {
+            for (k in 0 until ots) {
+                writer.write(" ")
+            }
+        }
+    }
+    writer.close()
 }
 
